@@ -3,7 +3,68 @@ body {
     background: #d0f0ff;
     text-align: center;
   }
-#profitPerHour {
+/* Loading overlay */
+body::before,
+body::after {
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+}
+
+body::before {
+  content: "Loading...";
+  top: 40%;
+  text-align: center;
+  font-size: 2.5em;
+  font-weight: bold;
+  color: white;
+  background: linear-gradient(135deg, #000000, #8b0000);
+  height: 100%;
+  animation: hideOverlay 4s forwards;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+body::after {
+  content: "";
+  top: 60%;
+  height: 20px;
+  width: 80%;
+  margin: auto;
+  left: 10%;
+  background-color: #222;
+  border: 2px solid #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  animation: hideOverlay 4s forwards;
+}
+
+body::after {
+  background-image: linear-gradient(to right, #ff0000, #ff6666);
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  animation:
+    fillProgress 3s linear forwards,
+    hideOverlay 4s forwards;
+}
+
+/* Fill bar animation */
+@keyframes fillProgress {
+  from { background-size: 0% 100%; }
+  to   { background-size: 100% 100%; }
+}
+
+/* Fade out overlay */
+@keyframes hideOverlay {
+  0%   { opacity: 1; visibility: visible; }
+  90%  { opacity: 1; visibility: visible; }
+  100% { opacity: 0; visibility: hidden; }
+}
+
+  #profitPerHour {
   font-size: 1.2em;
   color: #fff;
   position: fixed;
