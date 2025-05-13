@@ -24,3 +24,31 @@ body {
   50% { color: #ff6666; }
   100% { color: #ff0000; }
 }
+.menu {
+  display: flex;
+  justify-content: space-between; /* Розподіляє кнопки рівномірно */
+  margin-top: 30px;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 10px;
+  box-sizing: border-box; /* Щоб padding не виходив за межі */
+}
+
+.menu button {
+  padding: 8px 15px; /* Зменшуємо padding для кнопок */
+  font-size: 1em; /* Зменшуємо розмір шрифта */
+  background-color: #ff0000;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  flex-grow: 1; /* Розтягує кнопки рівномірно */
+  margin: 0 5px; /* Додаємо відступи між кнопками */
+}
+
+.menu button:hover {
+  background-color: #e60000;
+}
