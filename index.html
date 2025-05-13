@@ -32,6 +32,7 @@
       border-radius: 15px;
       box-shadow: 0 0 30px rgba(255, 0, 0, 0.4);
       background-color: rgba(0, 0, 0, 0.3);
+      position: relative;
     }
 
     h1 {
@@ -172,6 +173,19 @@
     #saveBtn:hover {
       background-color: #e60000;
     }
+
+    #profitPerHour {
+      font-size: 1em; /* Зменшений шрифт */
+      color: #fff;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 10;
+      background-color: rgba(255, 0, 0, 0.6); /* Світло червона рамка */
+      padding: 5px 10px;
+      border-radius: 8px;
+      border: 2px solid #ff6666; /* Світло червона рамка */
+    }
   </style>
 </head>
 <body>
@@ -179,13 +193,15 @@
     <h1>Click on the Penguin!</h1>
     <div id="rank">Level: Newbie 🐣</div>
 
-    <!-- Пінгвіньонок в кружку як стікер -->
     <div class="penguin-wrapper" id="penguin">
-      <span>🐧</span> <!-- Стекер пінгвіна тут -->
+      <span>🐧</span>
     </div>
 
     <p>Pingvi Coins: <span id="counter">0</span></p>
     <button id="saveBtn">Save result</button>
+
+    <!-- Profit per hour display inside the frame -->
+    <div id="profitPerHour">Profit per hour: 0 coins</div>
   </div>
 
   <!-- Upgrade Menu -->
@@ -210,6 +226,7 @@
     let passiveIncomeRate = 1000 / 3600; // Amount per second for passive income (1000 coins per hour)
     const counter = document.getElementById("counter");
     const rank = document.getElementById("rank");
+    const profitPerHourElement = document.getElementById("profitPerHour");
 
     // Function to update rank based on coins
     function updateRank() {
@@ -217,6 +234,15 @@
       else if (count < 50) rank.innerText = "Level: Pingvinyonok-student 🐧";
       else if (count < 100) rank.innerText = "Level: Boss of the snow ❄️";
       else rank.innerText = "Level: Pingvi-Legend 🔥";
+    }
+
+    // Update profit per hour display
+    function updateProfitPerHour() {
+      if (passiveIncome) {
+        profitPerHourElement.innerText = `Profit per hour: ${Math.floor(1000)} coins`;
+      } else {
+        profitPerHourElement.innerText = `Profit per hour: 0 coins`;
+      }
     }
 
     // Save result to localStorage
@@ -245,6 +271,7 @@
 
       counter.innerText = count;
       updateRank();
+      updateProfitPerHour(); // Update profit per hour on load
     };
 
     // Add click event to the penguin
@@ -301,6 +328,7 @@
         count += passiveIncomeRate;
         counter.innerText = Math.floor(count);
         updateRank();
+        updateProfitPerHour(); // Update profit per hour every second
       }
     }, 1000); // Every second add a portion of 1000 coins per hour
   </script>
