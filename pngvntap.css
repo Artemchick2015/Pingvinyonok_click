@@ -26,16 +26,16 @@ body {
 }
 .menu {
   display: flex;
-  justify-content: space-between; /* Використовуємо space-between, щоб кнопки були рівно розподілені */
+  overflow-x: auto; /* Додаємо можливість горизонтальної прокрутки */
   margin-top: 30px;
   position: fixed;
-  left: 50%; /* Вирівнюємо контейнер по центру */
-  transform: translateX(-50%); /* Центруємо меню по горизонталі */
+  left: 0;
+  right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.6);
   padding: 10px;
-  width: 100%; /* Повна ширина контейнера */
-  box-sizing: border-box; /* Щоб padding не виходив за межі */
+  white-space: nowrap; /* Перешкоджає розриву елементів на нові рядки */
+  box-sizing: border-box;
 }
 
 .menu button {
@@ -46,12 +46,10 @@ body {
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  flex: 1; /* Кожна кнопка займає однакову ширину */
-  margin: 0 5px; /* Додаємо відступи між кнопками */
+  margin: 0 10px; /* Додаємо відступи між кнопками */
   text-align: center; /* Центруємо текст в кнопках */
 }
 
 .menu button:hover {
   background-color: #e60000;
 }
-
