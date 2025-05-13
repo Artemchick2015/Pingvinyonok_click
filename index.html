@@ -207,6 +207,7 @@
     let count = 0;
     let coinsPerClick = 1; // Default coins per click
     let passiveIncome = false; // If user has passive income
+    let passiveIncomeRate = 1000 / 3600; // Amount per second for passive income (1000 coins per hour)
     const counter = document.getElementById("counter");
     const rank = document.getElementById("rank");
 
@@ -266,7 +267,7 @@
       document.getElementById("upgradeMenu").style.display = "block";
     });
 
-    // Buy Upgrade
+    // Buy Upgrade (2 coins per click)
     document.getElementById("buyUpgrade").addEventListener("click", () => {
       if (count >= 50) {
         count -= 50;
@@ -281,7 +282,7 @@
       }
     });
 
-    // Buy Passive Income upgrade
+    // Buy Passive Income
     document.getElementById("buyPassiveIncome").addEventListener("click", () => {
       if (count >= 1000) {
         count -= 1000;
@@ -294,22 +295,14 @@
       }
     });
 
-    // Passive income: Add 1000 coins every hour
+    // Passive income: Add coins gradually
     setInterval(() => {
       if (passiveIncome) {
-        count += 1000;
-        counter.innerText = count;
+        count += passiveIncomeRate;
+        counter.innerText = Math.floor(count);
         updateRank();
       }
-    }, 3600000); // 3600000 ms = 1 hour
-
-    // Close upgrade menu and return to Penguin
-    document.getElementById("closeUpgrade").addEventListener("click", () => {
-      document.getElementById("upgradeMenu").style.display = "none";
-      document.querySelector(".container").style.display = "block";
-    });
+    }, 1000); // Every second add a portion of 1000 coins per hour
   </script>
 </body>
 </html>
-
-
