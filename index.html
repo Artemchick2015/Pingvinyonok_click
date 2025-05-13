@@ -1,14 +1,49 @@
 <!-- index.html -->
 <link rel="stylesheet" href="style.css">
-<!-- index.html -->
-<link rel="stylesheet" href="style.css">
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Penguin Clicker 🐧</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <link rel="stylesheet" href="style.css">
   <style>
+    /* --- Loader styles --- */
+    #loader-overlay {
+      position: fixed;
+      z-index: 9999;
+      left: 0; top: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.92);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+    .loader-content {
+      text-align: center;
+    }
+    .loader-text {
+      color: #fff;
+      font-size: 1.5em;
+      margin-bottom: 20px;
+      letter-spacing: 2px;
+    }
+    .progress-bar {
+      width: 300px;
+      height: 16px;
+      background: #333;
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 0 auto;
+      box-shadow: 0 0 8px #ff0000;
+    }
+    .progress {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, #ff4163, #ff4b2b);
+      transition: width 0.2s linear;
+    }
+    /* --- Your existing styles (from style.css and inline) go here --- */
     body {
       background: linear-gradient(135deg, #000000, #8b0000, #000000);
       background-size: 400% 400%;
@@ -19,13 +54,11 @@
       padding: 20px;
       color: #fff;
     }
-
     @keyframes gradientShift {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-
     .container {
       max-width: 400px;
       margin: auto;
@@ -36,18 +69,15 @@
       background-color: rgba(0, 0, 0, 0.3);
       position: relative;
     }
-
     h1 {
       font-size: 1.8em;
       margin-bottom: 10px;
     }
-
     #rank {
       font-size: 1.2em;
       margin-bottom: 20px;
       color: #ffcccb;
     }
-
     .penguin-wrapper {
       width: 200px;
       height: 200px;
@@ -64,27 +94,22 @@
       align-items: center;
       background-color: rgba(255, 255, 255, 0.2);
     }
-
     .penguin-wrapper:active {
       transform: scale(0.95);
     }
-
     .penguin-wrapper span {
       font-size: 3em;
       display: inline-block;
       transition: transform 0.1s ease;
     }
-
     .penguin-wrapper span:active {
       transform: scale(0.9);
     }
-
     #counter {
       font-size: 1.5em;
       font-weight: bold;
       margin-top: 15px;
     }
-
     .spark {
       position: absolute;
       width: 10px;
@@ -94,12 +119,10 @@
       animation: pop 0.6s forwards ease-out;
       pointer-events: none;
     }
-
     @keyframes pop {
       0% { transform: scale(1); opacity: 1; }
       100% { transform: scale(2.5); opacity: 0; }
     }
-
     .menu {
       display: flex;
       justify-content: space-evenly;
@@ -111,7 +134,6 @@
       background-color: rgba(0, 0, 0, 0.6);
       padding: 10px;
     }
-
     .menu button {
       padding: 10px 20px;
       font-size: 1.2em;
@@ -121,11 +143,9 @@
       border-radius: 8px;
       cursor: pointer;
     }
-
     .menu button:hover {
       background-color: #e60000;
     }
-
     .upgrade-container {
       margin-top: 20px;
       border: 2px solid #ff0000;
@@ -133,12 +153,10 @@
       background-color: rgba(0, 0, 0, 0.3);
       display: none;
     }
-
     .upgrade-container p {
       font-size: 1.2em;
       color: #fff;
     }
-
     .upgrade-button {
       padding: 10px 20px;
       font-size: 1.2em;
@@ -148,18 +166,15 @@
       border-radius: 8px;
       cursor: pointer;
     }
-
     .upgrade-button:hover {
       background-color: #e6b800;
     }
-
     .close-upgrade {
       margin-top: 10px;
       color: #ff0000;
       cursor: pointer;
       text-decoration: underline;
     }
-
     #saveBtn {
       margin-top: 20px;
       padding: 10px 20px;
@@ -171,11 +186,9 @@
       font-size: 1.2em;
       display: inline-block;
     }
-
     #saveBtn:hover {
       background-color: #e60000;
     }
-
     #profitPerHour {
       font-size: 1em;
       color: #fff;
@@ -188,8 +201,6 @@
       border-radius: 8px;
       border: 2px solid #ff6666;
     }
-
-    /* Casino Menu */
     .casino-container {
       display: none;
       text-align: center;
@@ -198,7 +209,6 @@
       border: 2px solid #ff0000;
       border-radius: 10px;
     }
-
     .casino-button {
       padding: 10px 20px;
       background-color: #ffcc00;
@@ -208,25 +218,19 @@
       border-radius: 8px;
       cursor: pointer;
     }
-
     .casino-button:hover {
       background-color: #e6b800;
     }
-
     .casino-result {
       font-size: 2em;
       margin-top: 20px;
     }
-
     .casino-fail {
       color: red;
     }
-
     .casino-win {
       color: green;
     }
-
-    /* Promocode Menu */
     .promo-container {
       display: none;
       text-align: center;
@@ -236,7 +240,6 @@
       border-radius: 10px;
       margin-top: 20px;
     }
-
     #promoInput {
       padding: 10px;
       font-size: 1.2em;
@@ -245,7 +248,6 @@
       border: 2px solid #ff0000;
       border-radius: 8px;
     }
-
     #submitPromo {
       padding: 10px 20px;
       background-color: #ffcc00;
@@ -255,75 +257,105 @@
       border-radius: 8px;
       cursor: pointer;
     }
-
     #submitPromo:hover {
       background-color: #e6b800;
     }
-
     #promoResult {
       font-size: 1.5em;
       margin-top: 20px;
     }
-
     .promo-win {
       color: green;
     }
-
     .promo-fail {
       color: red;
     }
-
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Click on the Penguin!</h1>
-    <div id="rank">Level: Newbie 🐣</div>
+  <!-- Loader overlay -->
+  <div id="loader-overlay">
+    <div class="loader-content">
+      <div class="loader-text">Loading...</div>
+      <div class="progress-bar">
+        <div class="progress"></div>
+      </div>
+    </div>
+  </div>
 
-    <div class="penguin-wrapper" id="penguin">
-      <span>🐧</span>
+  <div id="main-content" style="display:none;">
+    <div class="container">
+      <h1>Click on the Penguin!</h1>
+      <div id="rank">Level: Newbie 🐣</div>
+
+      <div class="penguin-wrapper" id="penguin">
+        <span>🐧</span>
+      </div>
+
+      <p>Pingvi Coins: <span id="counter">0</span></p>
+      <button id="saveBtn">Save result</button>
+      <div id="profitPerHour">Profit per hour: 0 coins</div>
     </div>
 
-    <p>Pingvi Coins: <span id="counter">0</span></p>
-    <button id="saveBtn">Save result</button>
-    <div id="profitPerHour">Profit per hour: 0 coins</div>
-  </div>
+    <!-- Promocode Menu -->
+    <div class="promo-container" id="promoMenu">
+      <h2>Enter the Promocode</h2>
+      <input type="text" id="promoInput" placeholder="Enter your promo code" />
+      <button id="submitPromo">Submit</button>
+      <div id="promoResult"></div>
+    </div>
 
-  <!-- Promocode Menu -->
-  <div class="promo-container" id="promoMenu">
-    <h2>Enter the Promocode</h2>
-    <input type="text" id="promoInput" placeholder="Enter your promo code" />
-    <button id="submitPromo">Submit</button>
-    <div id="promoResult"></div>
-  </div>
+    <!-- Upgrade Menu -->
+    <div class="upgrade-container" id="upgradeMenu">
+      <p>Upgrade: 2 Pingvi coins per click = 50 coins</p>
+      <button class="upgrade-button" id="buyUpgrade">Buy Upgrade</button>
+      <p>Passive Income: 1000 Pingvi coins per hour = 1000 coins</p>
+      <button class="upgrade-button" id="buyPassiveIncome">Buy Passive Income</button>
+      <span class="close-upgrade" id="closeUpgrade">Back to Penguin</span>
+    </div>
 
-  <!-- Upgrade Menu -->
-  <div class="upgrade-container" id="upgradeMenu">
-    <p>Upgrade: 2 Pingvi coins per click = 50 coins</p>
-    <button class="upgrade-button" id="buyUpgrade">Buy Upgrade</button>
-    <p>Passive Income: 1000 Pingvi coins per hour = 1000 coins</p>
-    <button class="upgrade-button" id="buyPassiveIncome">Buy Passive Income</button>
-    <span class="close-upgrade" id="closeUpgrade">Back to Penguin</span>
-  </div>
+    <!-- Casino Game -->
+    <div class="casino-container" id="casinoMenu">
+      <h2>Welcome to Pingvi Casino</h2>
+      <p>Invest Pingvi Coins to play. 5% chance to win 5x your bet!</p>
+      <input type="number" id="casinoBet" placeholder="Enter your bet" min="1" />
+      <button class="casino-button" id="playCasino">Play</button>
+      <div class="casino-result" id="casinoResult"></div>
+    </div>
 
-  <!-- Casino Game -->
-  <div class="casino-container" id="casinoMenu">
-    <h2>Welcome to Pingvi Casino</h2>
-    <p>Invest Pingvi Coins to play. 5% chance to win 5x your bet!</p>
-    <input type="number" id="casinoBet" placeholder="Enter your bet" min="1" />
-    <button class="casino-button" id="playCasino">Play</button>
-    <div class="casino-result" id="casinoResult"></div>
-  </div>
-
-  <!-- Menu buttons at the bottom -->
-  <div class="menu">
-    <button id="pingvinBtn">Penguin</button>
-    <button id="upgradeBtn">Upgrade</button>
-    <button id="gamesBtn">Games</button>
-    <button id="promoCodeBtn">Promocode</button>
+    <!-- Menu buttons at the bottom -->
+    <div class="menu">
+      <button id="pingvinBtn">Penguin</button>
+      <button id="upgradeBtn">Upgrade</button>
+      <button id="gamesBtn">Games</button>
+      <button id="promoCodeBtn">Promocode</button>
+    </div>
   </div>
 
   <script>
+    // Loader logic
+    window.addEventListener('DOMContentLoaded', function() {
+      const loader = document.getElementById('loader-overlay');
+      const progress = loader.querySelector('.progress');
+      let duration = 3000; // 3 секунди
+      let start = null;
+
+      function animateProgressBar(timestamp) {
+        if (!start) start = timestamp;
+        let elapsed = timestamp - start;
+        let percent = Math.min((elapsed / duration) * 100, 100);
+        progress.style.width = percent + "%";
+        if (elapsed < duration) {
+          requestAnimationFrame(animateProgressBar);
+        } else {
+          loader.style.display = 'none';
+          document.getElementById('main-content').style.display = 'block';
+        }
+      }
+      requestAnimationFrame(animateProgressBar);
+    });
+
+    // --- Твій код без змін ---
     let count = 0;
     let coinsPerClick = 1;
     let passiveIncome = false;
@@ -332,39 +364,32 @@
     const rank = document.getElementById("rank");
     const profitPerHourElement = document.getElementById("profitPerHour");
 
-// Promocode Logic
-document.getElementById("promoCodeBtn").addEventListener("click", () => {
-  document.querySelector(".container").style.display = "none";
-  document.getElementById("promoMenu").style.display = "block";
-});
+    // Promocode Logic
+    document.getElementById("promoCodeBtn").addEventListener("click", () => {
+      document.querySelector(".container").style.display = "none";
+      document.getElementById("promoMenu").style.display = "block";
+    });
+    document.getElementById("submitPromo").addEventListener("click", () => {
+      const promoCode = document.getElementById("promoInput").value.trim().toLowerCase();
+      const promoResultElement = document.getElementById("promoResult");
+      const usedPromoCode = localStorage.getItem("usedPromoCode");
+      if (usedPromoCode === "true") {
+        promoResultElement.innerText = "You already used this promocode!";
+        promoResultElement.className = "promo-fail";
+      } else if (promoCode === "pingvi10") {
+        count += 1000;
+        localStorage.setItem("usedPromoCode", "true");
+        promoResultElement.innerText = "Promo code applied! +1000 Pingvi coins";
+        promoResultElement.className = "promo-win";
+      } else {
+        promoResultElement.innerText = "Invalid promo code!";
+        promoResultElement.className = "promo-fail";
+      }
+      counter.innerText = count;
+      updateRank();
+      updateProfitPerHour();
+    });
 
-document.getElementById("submitPromo").addEventListener("click", () => {
-  const promoCode = document.getElementById("promoInput").value.trim().toLowerCase();
-  const promoResultElement = document.getElementById("promoResult");
-
-  // Перевірка, чи вже використовувався промокод
-  const usedPromoCode = localStorage.getItem("usedPromoCode");
-
-  if (usedPromoCode === "true") {
-    promoResultElement.innerText = "You already used this promocode!";
-    promoResultElement.className = "promo-fail";
-  } else if (promoCode === "pingvi10") {
-    count += 1000; // даємо 1000 монет
-    localStorage.setItem("usedPromoCode", "true"); // зберігаємо, що промокод був використаний
-    promoResultElement.innerText = "Promo code applied! +1000 Pingvi coins";
-    promoResultElement.className = "promo-win";
-  } else {
-    promoResultElement.innerText = "Invalid promo code!";
-    promoResultElement.className = "promo-fail";
-  }
-
-  counter.innerText = count;
-  updateRank();
-  updateProfitPerHour();
-});
-
-
-    // Update Rank
     function updateRank() {
       if (count < 10) rank.innerText = "Level: Newbie 🐣";
       else if (count < 50) rank.innerText = "Level: Pingvinyonok-student 🐧";
@@ -372,7 +397,6 @@ document.getElementById("submitPromo").addEventListener("click", () => {
       else rank.innerText = "Level: Pingvi-Legend 🔥";
     }
 
-    // Update Profit Per Hour
     function updateProfitPerHour() {
       if (passiveIncome) {
         profitPerHourElement.innerText = `Profit per hour: ${Math.floor(1000)} coins`;
@@ -381,7 +405,6 @@ document.getElementById("submitPromo").addEventListener("click", () => {
       }
     }
 
-    // Save and Load Results
     document.getElementById("saveBtn").addEventListener("click", function() {
       localStorage.setItem("coins", count);
       localStorage.setItem("coinsPerClick", coinsPerClick);
@@ -393,7 +416,6 @@ document.getElementById("submitPromo").addEventListener("click", () => {
       const savedCoins = localStorage.getItem("coins");
       const savedCoinsPerClick = localStorage.getItem("coinsPerClick");
       const savedPassiveIncome = localStorage.getItem("passiveIncome");
-
       if (savedCoins && !isNaN(savedCoins)) {
         count = parseInt(savedCoins);
       }
@@ -403,13 +425,11 @@ document.getElementById("submitPromo").addEventListener("click", () => {
       if (savedPassiveIncome === "true") {
         passiveIncome = true;
       }
-
       counter.innerText = count;
       updateRank();
       updateProfitPerHour();
     };
 
-    // Penguin Click
     const penguin = document.getElementById("penguin");
     penguin.addEventListener("click", () => {
       count += coinsPerClick;
@@ -417,7 +437,6 @@ document.getElementById("submitPromo").addEventListener("click", () => {
       updateRank();
     });
 
-    // Menu Button Functions
     document.getElementById("pingvinBtn").addEventListener("click", () => {
       document.getElementById("upgradeMenu").style.display = "none";
       document.getElementById("casinoMenu").style.display = "none";
@@ -436,21 +455,15 @@ document.getElementById("submitPromo").addEventListener("click", () => {
       document.getElementById("casinoMenu").style.display = "block";
     });
 
-    // Casino Game Logic
     document.getElementById("playCasino").addEventListener("click", () => {
       const bet = parseInt(document.getElementById("casinoBet").value);
-
       if (bet > count || isNaN(bet) || bet <= 0) {
         alert("Invalid bet amount.");
         return;
       }
-
       count -= bet;
-
-      // 5% chance to win 5x
       const chance = Math.random();
       const casinoResultElement = document.getElementById("casinoResult");
-
       if (chance <= 0.05) {
         const winnings = bet * 5;
         count += winnings;
@@ -460,7 +473,6 @@ document.getElementById("submitPromo").addEventListener("click", () => {
         casinoResultElement.innerText = "Fail";
         casinoResultElement.className = "casino-result casino-fail";
       }
-
       counter.innerText = count;
       updateRank();
       updateProfitPerHour();
