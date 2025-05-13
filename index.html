@@ -192,6 +192,8 @@
   <div class="upgrade-container" id="upgradeMenu">
     <p>Upgrade: 2 Pingvi coins per click = 50 coins</p>
     <button class="upgrade-button" id="buyUpgrade">Buy Upgrade</button>
+    <p>Passive Income: 1000 Pingvi coins per hour = 1000 coins</p>
+    <button class="upgrade-button" id="buyPassiveIncome">Buy Passive Income</button>
     <span class="close-upgrade" id="closeUpgrade">Back to Penguin</span>
   </div>
 
@@ -204,6 +206,7 @@
   <script>
     let count = 0;
     let coinsPerClick = 1; // Default coins per click
+    let passiveIncome = false; // If user has passive income
     const counter = document.getElementById("counter");
     const rank = document.getElementById("rank");
 
@@ -219,6 +222,7 @@
     document.getElementById("saveBtn").addEventListener("click", function() {
       localStorage.setItem("coins", count);
       localStorage.setItem("coinsPerClick", coinsPerClick);
+      localStorage.setItem("passiveIncome", passiveIncome);
       alert("Result saved!");
     });
 
@@ -226,12 +230,16 @@
     window.onload = function() {
       const savedCoins = localStorage.getItem("coins");
       const savedCoinsPerClick = localStorage.getItem("coinsPerClick");
+      const savedPassiveIncome = localStorage.getItem("passiveIncome");
 
       if (savedCoins && !isNaN(savedCoins)) {
         count = parseInt(savedCoins);
       }
       if (savedCoinsPerClick && !isNaN(savedCoinsPerClick)) {
         coinsPerClick = parseInt(savedCoinsPerClick);
+      }
+      if (savedPassiveIncome === "true") {
+        passiveIncome = true;
       }
 
       counter.innerText = count;
@@ -273,6 +281,28 @@
       }
     });
 
+    // Buy Passive Income upgrade
+    document.getElementById("buyPassiveIncome").addEventListener("click", () => {
+      if (count >= 1000) {
+        count -= 1000;
+        passiveIncome = true;
+        localStorage.setItem("coins", count);
+        localStorage.setItem("passiveIncome", passiveIncome);
+        alert("Passive income upgrade purchased! You now earn 1000 coins per hour.");
+      } else {
+        alert("Not enough Pingvi Coins!");
+      }
+    });
+
+    // Passive income: Add 1000 coins every hour
+    setInterval(() => {
+      if (passiveIncome) {
+        count += 1000;
+        counter.innerText = count;
+        updateRank();
+      }
+    }, 3600000); // 3600000 ms = 1 hour
+
     // Close upgrade menu and return to Penguin
     document.getElementById("closeUpgrade").addEventListener("click", () => {
       document.getElementById("upgradeMenu").style.display = "none";
@@ -281,3 +311,5 @@
   </script>
 </body>
 </html>
+
+
