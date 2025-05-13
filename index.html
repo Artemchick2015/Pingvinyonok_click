@@ -1,0 +1,274 @@
+<!-- index.html -->
+<link rel="stylesheet" href="style.css">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Penguin Clicker 🐧</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    body {
+      background: linear-gradient(135deg, #000000, #8b0000, #000000);
+      background-size: 400% 400%;
+      animation: gradientShift 10s ease infinite;
+      text-align: center;
+      font-family: "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 20px;
+      color: #fff;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .container {
+      max-width: 400px;
+      margin: auto;
+      padding: 20px;
+      border: 2px solid #ff0000;
+      border-radius: 15px;
+      box-shadow: 0 0 30px rgba(255, 0, 0, 0.4);
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      font-size: 1.8em;
+      margin-bottom: 10px;
+    }
+
+    #rank {
+      font-size: 1.2em;
+      margin-bottom: 20px;
+      color: #ffcccb;
+    }
+
+    .penguin-wrapper {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 5px solid #ff0000;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+      cursor: pointer;
+      transition: transform 0.1s ease-in-out;
+      position: relative;
+    }
+
+    .penguin-wrapper:active {
+      transform: scale(0.95);
+    }
+
+    .penguin-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    #counter {
+      font-size: 1.5em;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+
+    .spark {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: yellow;
+      border-radius: 50%;
+      animation: pop 0.6s forwards ease-out;
+      pointer-events: none;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(2.5); opacity: 0; }
+    }
+
+    .menu {
+      display: flex;
+      justify-content: space-evenly;
+      margin-top: 30px;
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 10px;
+    }
+
+    .menu button {
+      padding: 10px 20px;
+      font-size: 1.2em;
+      background-color: #ff0000;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .menu button:hover {
+      background-color: #e60000;
+    }
+
+    .upgrade-container {
+      margin-top: 20px;
+      border: 2px solid #ff0000;
+      padding: 20px;
+      background-color: rgba(0, 0, 0, 0.3);
+      display: none;
+    }
+
+    .upgrade-container p {
+      font-size: 1.2em;
+      color: #fff;
+    }
+
+    .upgrade-button {
+      padding: 10px 20px;
+      font-size: 1.2em;
+      background-color: #ffcc00;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .upgrade-button:hover {
+      background-color: #e6b800;
+    }
+
+    .close-upgrade {
+      margin-top: 10px;
+      color: #ff0000;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    #saveBtn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #ff0000;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.2em;
+      display: inline-block;
+    }
+
+    #saveBtn:hover {
+      background-color: #e60000;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Click on the Penguin!</h1>
+    <div id="rank">Level: Newbie 🐣</div>
+
+    <div class="penguin-wrapper" id="penguin">
+      <img src="file:///C:/Users/USER/Pictures/Screenshots/DALL·E%202024-11-13%2021.11.22%20-%20A%20glowing%20red%20anime-style%20penguin%20with%20a%20unique%20and%20abstract%20look%2C%20similar%20to%20a%20glowing%20toy%20figure%2C%20set%20against%20a%20dark%20background.%20The%20penguin%20should%20.webp" alt="Penguin">
+    </div>
+
+    <p>Pingvi Coins: <span id="counter">0</span></p>
+    <button id="saveBtn">Save result</button>
+  </div>
+
+  <!-- Upgrade Menu -->
+  <div class="upgrade-container" id="upgradeMenu">
+    <p>Upgrade: 2 Pingvi coins per click = 50 coins</p>
+    <button class="upgrade-button" id="buyUpgrade">Buy Upgrade</button>
+    <span class="close-upgrade" id="closeUpgrade">Back to Penguin</span>
+  </div>
+
+  <!-- Menu buttons at the bottom -->
+  <div class="menu">
+    <button id="pingvinBtn">Pingvinyonok</button>
+    <button id="upgradeBtn">Upgrade</button>
+  </div>
+
+  <script>
+    let count = 0;
+    let coinsPerClick = 1; // Default coins per click
+    const counter = document.getElementById("counter");
+    const rank = document.getElementById("rank");
+
+    // Function to update rank based on coins
+    function updateRank() {
+      if (count < 10) rank.innerText = "Level: Newbie 🐣";
+      else if (count < 50) rank.innerText = "Level: Pingvinyonok-student 🐧";
+      else if (count < 100) rank.innerText = "Level: Boss of the snow ❄️";
+      else rank.innerText = "Level: Pingvi-Legend 🔥";
+    }
+
+    // Save result to localStorage
+    document.getElementById("saveBtn").addEventListener("click", function() {
+      localStorage.setItem("coins", count);
+      localStorage.setItem("coinsPerClick", coinsPerClick);
+      alert("Result saved!");
+    });
+
+    // Load saved result from localStorage
+    window.onload = function() {
+      const savedCoins = localStorage.getItem("coins");
+      const savedCoinsPerClick = localStorage.getItem("coinsPerClick");
+
+      if (savedCoins && !isNaN(savedCoins)) {
+        count = parseInt(savedCoins);
+      }
+      if (savedCoinsPerClick && !isNaN(savedCoinsPerClick)) {
+        coinsPerClick = parseInt(savedCoinsPerClick);
+      }
+
+      counter.innerText = count;
+      updateRank();
+    };
+
+    // Add click event to the penguin
+    const penguin = document.getElementById("penguin");
+    penguin.addEventListener("click", () => {
+      count += coinsPerClick;
+      counter.innerText = count;
+      updateRank();
+    });
+
+    // Menu button to show Penguin and hide Upgrade
+    document.getElementById("pingvinBtn").addEventListener("click", () => {
+      document.getElementById("upgradeMenu").style.display = "none";
+      document.querySelector(".container").style.display = "block";
+    });
+
+    // Menu button to show Upgrade
+    document.getElementById("upgradeBtn").addEventListener("click", () => {
+      document.querySelector(".container").style.display = "none";
+      document.getElementById("upgradeMenu").style.display = "block";
+    });
+
+    // Buy Upgrade
+    document.getElementById("buyUpgrade").addEventListener("click", () => {
+      if (count >= 50) {
+        count -= 50;
+        coinsPerClick = 2;
+        counter.innerText = count;
+        updateRank();
+        localStorage.setItem("coins", count);
+        localStorage.setItem("coinsPerClick", coinsPerClick);
+        alert("Upgrade purchased!");
+      } else {
+        alert("Not enough Pingvi Coins!");
+      }
+    });
+
+    // Close upgrade menu and return to Penguin
+    document.getElementById("closeUpgrade").addEventListener("click", () => {
+      document.getElementById("upgradeMenu").style.display = "none";
+      document.querySelector(".container").style.display = "block";
+    });
+  </script>
+</body>
+</html>
