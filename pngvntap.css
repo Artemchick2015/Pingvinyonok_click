@@ -18,39 +18,6 @@ body {
   text-align: center;
   animation: pulseRed 3s infinite; /* Анімація для переливу */
 }
-.menu {
-  display: flex;
-  justify-content: center;
-  gap: 8px;              /* Відстань між кнопками (можеш змінити на 6-10px якщо треба) */
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  padding: 6px 4px;
-  z-index: 1000;
-}
-
-.menu button {
-  flex: 1 1 0;
-  min-width: 0;
-  max-width: 90px;       /* Максимальна ширина кнопки */
-  padding: 6px 0;        /* Менший padding */
-  font-size: 15px;       /* Трохи менший шрифт */
-  border: none;
-  border-radius: 6px;
-  background-color: #ff0000;
-  color: #fff;
-  cursor: pointer;
-  transition: background 0.2s;
-  margin: 0;             /* Прибрати margin */
-  height: 34px;          /* Менша висота */
-  box-sizing: border-box;
-  white-space: nowrap;   /* Щоб текст не переносився */
-}
-.menu button:hover {
-  background-color: #e60000;
-}
 
 @keyframes pulseRed {
   0% { color: #ff0000; }
