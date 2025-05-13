@@ -332,29 +332,37 @@
     const rank = document.getElementById("rank");
     const profitPerHourElement = document.getElementById("profitPerHour");
 
-    // Promocode Logic
-    document.getElementById("promoCodeBtn").addEventListener("click", () => {
-      document.querySelector(".container").style.display = "none";
-      document.getElementById("promoMenu").style.display = "block";
-    });
+// Promocode Logic
+document.getElementById("promoCodeBtn").addEventListener("click", () => {
+  document.querySelector(".container").style.display = "none";
+  document.getElementById("promoMenu").style.display = "block";
+});
 
-    document.getElementById("submitPromo").addEventListener("click", () => {
-      const promoCode = document.getElementById("promoInput").value.trim().toLowerCase();
-      const promoResultElement = document.getElementById("promoResult");
+document.getElementById("submitPromo").addEventListener("click", () => {
+  const promoCode = document.getElementById("promoInput").value.trim().toLowerCase();
+  const promoResultElement = document.getElementById("promoResult");
 
-      if (promoCode === "pingvi10") {
-        count += 10;
-        promoResultElement.innerText = "Promo code applied! +10 Pingvi coins";
-        promoResultElement.className = "promo-win";
-      } else {
-        promoResultElement.innerText = "Invalid promo code!";
-        promoResultElement.className = "promo-fail";
-      }
+  // Перевірка, чи вже використовувався промокод
+  const usedPromoCode = localStorage.getItem("usedPromoCode");
 
-      counter.innerText = count;
-      updateRank();
-      updateProfitPerHour();
-    });
+  if (usedPromoCode === "true") {
+    promoResultElement.innerText = "You already used this promocode!";
+    promoResultElement.className = "promo-fail";
+  } else if (promoCode === "pingvi10") {
+    count += 1000; // даємо 1000 монет
+    localStorage.setItem("usedPromoCode", "true"); // зберігаємо, що промокод був використаний
+    promoResultElement.innerText = "Promo code applied! +1000 Pingvi coins";
+    promoResultElement.className = "promo-win";
+  } else {
+    promoResultElement.innerText = "Invalid promo code!";
+    promoResultElement.className = "promo-fail";
+  }
+
+  counter.innerText = count;
+  updateRank();
+  updateProfitPerHour();
+});
+
 
     // Update Rank
     function updateRank() {
