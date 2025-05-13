@@ -175,16 +175,53 @@
     }
 
     #profitPerHour {
-      font-size: 1em; /* Зменшений шрифт */
+      font-size: 1em;
       color: #fff;
       position: absolute;
       top: 10px;
       right: 10px;
       z-index: 10;
-      background-color: rgba(255, 0, 0, 0.6); /* Світло червона рамка */
+      background-color: rgba(255, 0, 0, 0.6);
       padding: 5px 10px;
       border-radius: 8px;
-      border: 2px solid #ff6666; /* Світло червона рамка */
+      border: 2px solid #ff6666;
+    }
+
+    /* Casino Menu */
+    .casino-container {
+      display: none;
+      text-align: center;
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 20px;
+      border: 2px solid #ff0000;
+      border-radius: 10px;
+    }
+
+    .casino-button {
+      padding: 10px 20px;
+      background-color: #ffcc00;
+      color: #fff;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .casino-button:hover {
+      background-color: #e6b800;
+    }
+
+    .casino-result {
+      font-size: 2em;
+      margin-top: 20px;
+    }
+
+    .casino-fail {
+      color: red;
+    }
+
+    .casino-win {
+      color: green;
     }
   </style>
 </head>
@@ -200,7 +237,6 @@
     <p>Pingvi Coins: <span id="counter">0</span></p>
     <button id="saveBtn">Save result</button>
 
-    <!-- Profit per hour display inside the frame -->
     <div id="profitPerHour">Profit per hour: 0 coins</div>
   </div>
 
@@ -213,22 +249,32 @@
     <span class="close-upgrade" id="closeUpgrade">Back to Penguin</span>
   </div>
 
+  <!-- Casino Game -->
+  <div class="casino-container" id="casinoMenu">
+    <h2>Welcome to Pingvi Casino</h2>
+    <p>Invest Pingvi Coins to play. 5% chance to win 5x your bet!</p>
+    <input type="number" id="casinoBet" placeholder="Enter your bet" min="1" />
+    <button class="casino-button" id="playCasino">Play</button>
+    <div class="casino-result" id="casinoResult"></div>
+  </div>
+
   <!-- Menu buttons at the bottom -->
   <div class="menu">
     <button id="pingvinBtn">Pingvinyonok</button>
     <button id="upgradeBtn">Upgrade</button>
+    <button id="gamesBtn">Games</button>
   </div>
 
   <script>
     let count = 0;
-    let coinsPerClick = 1; // Default coins per click
-    let passiveIncome = false; // If user has passive income
-    let passiveIncomeRate = 1000 / 3600; // Amount per second for passive income (1000 coins per hour)
+    let coinsPerClick = 1;
+    let passiveIncome = false;
+    let passiveIncomeRate = 1000 / 3600;
     const counter = document.getElementById("counter");
     const rank = document.getElementById("rank");
     const profitPerHourElement = document.getElementById("profitPerHour");
 
-    // Function to update rank based on coins
+    // Update Rank
     function updateRank() {
       if (count < 10) rank.innerText = "Level: Newbie 🐣";
       else if (count < 50) rank.innerText = "Level: Pingvinyonok-student 🐧";
@@ -236,7 +282,7 @@
       else rank.innerText = "Level: Pingvi-Legend 🔥";
     }
 
-    // Update profit per hour display
+    // Update Profit Per Hour
     function updateProfitPerHour() {
       if (passiveIncome) {
         profitPerHourElement.innerText = `Profit per hour: ${Math.floor(1000)} coins`;
@@ -245,7 +291,7 @@
       }
     }
 
-    // Save result to localStorage
+    // Save and Load Results
     document.getElementById("saveBtn").addEventListener("click", function() {
       localStorage.setItem("coins", count);
       localStorage.setItem("coinsPerClick", coinsPerClick);
@@ -253,7 +299,6 @@
       alert("Result saved!");
     });
 
-    // Load saved result from localStorage
     window.onload = function() {
       const savedCoins = localStorage.getItem("coins");
       const savedCoinsPerClick = localStorage.getItem("coinsPerClick");
@@ -271,10 +316,10 @@
 
       counter.innerText = count;
       updateRank();
-      updateProfitPerHour(); // Update profit per hour on load
+      updateProfitPerHour();
     };
 
-    // Add click event to the penguin
+    // Penguin Click
     const penguin = document.getElementById("penguin");
     penguin.addEventListener("click", () => {
       count += coinsPerClick;
@@ -282,55 +327,54 @@
       updateRank();
     });
 
-    // Menu button to show Penguin and hide Upgrade
+    // Menu Button Functions
     document.getElementById("pingvinBtn").addEventListener("click", () => {
       document.getElementById("upgradeMenu").style.display = "none";
+      document.getElementById("casinoMenu").style.display = "none";
       document.querySelector(".container").style.display = "block";
     });
 
-    // Menu button to show Upgrade
     document.getElementById("upgradeBtn").addEventListener("click", () => {
       document.querySelector(".container").style.display = "none";
       document.getElementById("upgradeMenu").style.display = "block";
     });
 
-    // Buy Upgrade (2 coins per click)
-    document.getElementById("buyUpgrade").addEventListener("click", () => {
-      if (count >= 50) {
-        count -= 50;
-        coinsPerClick = 2;
-        counter.innerText = count;
-        updateRank();
-        localStorage.setItem("coins", count);
-        localStorage.setItem("coinsPerClick", coinsPerClick);
-        alert("Upgrade purchased!");
-      } else {
-        alert("Not enough Pingvi Coins!");
-      }
+    document.getElementById("gamesBtn").addEventListener("click", () => {
+      document.querySelector(".container").style.display = "none";
+      document.getElementById("upgradeMenu").style.display = "none";
+      document.getElementById("casinoMenu").style.display = "block";
     });
 
-    // Buy Passive Income
-    document.getElementById("buyPassiveIncome").addEventListener("click", () => {
-      if (count >= 1000) {
-        count -= 1000;
-        passiveIncome = true;
-        localStorage.setItem("coins", count);
-        localStorage.setItem("passiveIncome", passiveIncome);
-        alert("Passive income upgrade purchased! You now earn 1000 coins per hour.");
-      } else {
-        alert("Not enough Pingvi Coins!");
-      }
-    });
+    // Casino Game Logic
+    document.getElementById("playCasino").addEventListener("click", () => {
+      const bet = parseInt(document.getElementById("casinoBet").value);
 
-    // Passive income: Add coins gradually
-    setInterval(() => {
-      if (passiveIncome) {
-        count += passiveIncomeRate;
-        counter.innerText = Math.floor(count);
-        updateRank();
-        updateProfitPerHour(); // Update profit per hour every second
+      if (bet > count || isNaN(bet) || bet <= 0) {
+        alert("Invalid bet amount.");
+        return;
       }
-    }, 1000); // Every second add a portion of 1000 coins per hour
+
+      count -= bet;
+
+      // 5% chance to win 5x
+      const chance = Math.random();
+      const casinoResultElement = document.getElementById("casinoResult");
+
+      if (chance <= 0.05) {
+        const winnings = bet * 5;
+        count += winnings;
+        casinoResultElement.innerText = `You win! +${winnings} Pingvi Coins`;
+        casinoResultElement.className = "casino-result casino-win";
+      } else {
+        casinoResultElement.innerText = "Fail";
+        casinoResultElement.className = "casino-result casino-fail";
+      }
+
+      counter.innerText = count;
+      updateRank();
+      updateProfitPerHour();
+    });
   </script>
 </body>
 </html>
+
