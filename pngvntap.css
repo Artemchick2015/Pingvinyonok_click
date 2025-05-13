@@ -24,26 +24,31 @@ body {
   50% { color: #ff6666; }
   100% { color: #ff0000; }
 }
-.scrollable-menu {
-  width: 100%; /* Встановлюємо ширину на всю доступну ширину */
-  overflow-x: auto; /* Додаємо горизонтальну прокрутку */
-  -webkit-overflow-scrolling: touch; /* Додає плавну прокрутку на мобільних пристроях */
-}
-
 .menu {
-  display: flex; /* Розташовуємо кнопки в ряд */
-  padding: 10px 0; /* Відступи зверху та знизу */
+  display: flex;
+  justify-content: space-between; /* Використовуємо space-between, щоб кнопки були рівно розподілені */
+  margin-top: 30px;
+  position: fixed;
+  left: 50%; /* Вирівнюємо контейнер по центру */
+  transform: translateX(-50%); /* Центруємо меню по горизонталі */
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 10px;
+  width: 100%; /* Повна ширина контейнера */
+  box-sizing: border-box; /* Щоб padding не виходив за межі */
 }
 
 .menu button {
-  padding: 10px 20px; /* Відступи всередині кнопки */
-  font-size: 1em; /* Розмір шрифта */
+  padding: 6px 12px; /* Зменшення padding для кнопок */
+  font-size: 0.9em; /* Зменшення шрифту */
   background-color: #ff0000;
   color: #fff;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  margin: 0 10px; /* Відступи між кнопками */
+  flex: 1; /* Кожна кнопка займає однакову ширину */
+  margin: 0 5px; /* Додаємо відступи між кнопками */
+  text-align: center; /* Центруємо текст в кнопках */
 }
 
 .menu button:hover {
