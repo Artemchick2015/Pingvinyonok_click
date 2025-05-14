@@ -366,7 +366,7 @@
   window.addEventListener('DOMContentLoaded', function() {
     const loader = document.getElementById('loader-overlay');
     const progress = loader.querySelector('.progress');
-    let duration = 3000;
+    let duration = 2500;
     let start = null;
 
     function animateProgressBar(timestamp) {
@@ -398,8 +398,8 @@ document.addEventListener("visibilitychange", function() {
 
   // --- Логіка гри ---
   let count = 0;
-  let coinsPerClick = 1;
-  let passiveIncome = false;
+  let coinsPerClick = 3;
+  let passiveIncome = true;
   let passiveIncomeRate = 1000 / 3600;
   const counter = document.getElementById("counter");
   const rank = document.getElementById("rank");
@@ -461,10 +461,10 @@ document.addEventListener("visibilitychange", function() {
     if (usedPromoCode === "true") {
       promoResultElement.innerText = "You already used this promocode!";
       promoResultElement.className = "promo-fail";
-    } else if (promoCode === "pingvi10") {
-      count += 1000;
+    } else if (promoCode === "Sweetpingvi") {
+      count += 2500;
       localStorage.setItem("usedPromoCode", "true");
-      promoResultElement.innerText = "Promo code applied! +1000 Pingvi coins";
+      promoResultElement.innerText = "Promo code applied! +2500 Pingvi coins";
       promoResultElement.className = "promo-win";
     } else {
       promoResultElement.innerText = "Invalid promo code!";
@@ -476,9 +476,9 @@ document.addEventListener("visibilitychange", function() {
   });
 
   function updateRank() {
-    if (count < 10) rank.innerText = "Level: Newbie 🐣";
-    else if (count < 50) rank.innerText = "Level: Pingvinyonok-student 🐧";
-    else if (count < 100) rank.innerText = "Level: Boss of the snow ❄️";
+    if (count < 50) rank.innerText = "Level: Newbie 🐣";
+    else if (count < 200) rank.innerText = "Level: Pingvinyonok-student 🐧";
+    else if (count < 500) rank.innerText = "Level: Boss of the snow ❄️";
     else rank.innerText = "Level: Pingvi-Legend 🔥";
   }
 
