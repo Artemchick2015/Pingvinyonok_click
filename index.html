@@ -404,6 +404,48 @@ document.addEventListener("visibilitychange", function() {
   const counter = document.getElementById("counter");
   const rank = document.getElementById("rank");
   const profitPerHourElement = document.getElementById("profitPerHour");
+   // --- UPGRADE LOGIC ---
+  const buyUpgradeBtn = document.getElementById("buyUpgrade");
+  const buyPassiveIncomeBtn = document.getElementById("buyPassiveIncome");
+
+  buyUpgradeBtn.addEventListener("click", () => {
+    if (count >= 50 && coinsPerClick === 1) {
+      count -= 50;
+      coinsPerClick = 2;
+      counter.innerText = count;
+      updateRank();
+      alert("Upgrade bought! Now 2 coins per click.");
+    } else if (coinsPerClick > 1) {
+      alert("Upgrade already bought!");
+    } else {
+      alert("Not enough coins!");
+    }
+  });
+
+  buyPassiveIncomeBtn.addEventListener("click", () => {
+    if (count >= 1000 && !passiveIncome) {
+      count -= 1000;
+      passiveIncome = true;
+      counter.innerText = count;
+      updateRank();
+      updateProfitPerHour();
+      alert("Passive income bought!");
+    } else if (passiveIncome) {
+      alert("Passive income already bought!");
+    } else {
+      alert("Not enough coins!");
+    }
+  });
+
+  // Passive income increment every second
+  setInterval(() => {
+    if (passiveIncome) {
+      count += passiveIncomeRate;
+      counter.innerText = Math.floor(count);
+      updateRank();
+    }
+  }, 1000);
+
 
   // Promocode Logic
   document.getElementById("promoCodeBtn").addEventListener("click", () => {
