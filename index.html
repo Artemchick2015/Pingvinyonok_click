@@ -1,7 +1,7 @@
 <!-- index.html -->
 <link rel="stylesheet" href="style.css">
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -383,6 +383,18 @@
     }
     requestAnimationFrame(animateProgressBar);
   });
+  
+  // --- АВТОЗБЕРЕЖЕННЯ ---
+function autoSaveGame() {
+  localStorage.setItem("coins", count);
+  localStorage.setItem("coinsPerClick", coinsPerClick);
+  localStorage.setItem("passiveIncome", passiveIncome);
+}
+window.addEventListener("beforeunload", autoSaveGame);
+document.addEventListener("visibilitychange", function() {
+  if (document.visibilityState === "hidden") autoSaveGame();
+});
+
 
   // --- Логіка гри ---
   let count = 0;
