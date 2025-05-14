@@ -316,8 +316,9 @@
       <div id="rank">Level: Newbie 🐣</div>
 
       <div class="penguin-wrapper" id="penguin">
-        <span>🐧</span>
-      </div>
+  <img src="C:\Users\USER\Pictures\Screenshots\DALL·E 2024-11-13 21.11.22 - A glowing red anime-style penguin with a unique and abstract look, similar to a glowing toy figure, set against a dark background. The penguin should .webp" alt="Пінгвін" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />
+</div>
+
 
       <p>Pingvi Coins: <span id="counter">0</span></p>
       <button id="saveBtn">Save result</button>
@@ -366,7 +367,7 @@
   window.addEventListener('DOMContentLoaded', function() {
     const loader = document.getElementById('loader-overlay');
     const progress = loader.querySelector('.progress');
-    let duration = 2500;
+    let duration = 3000;
     let start = null;
 
     function animateProgressBar(timestamp) {
@@ -398,8 +399,8 @@ document.addEventListener("visibilitychange", function() {
 
   // --- Логіка гри ---
   let count = 0;
-  let coinsPerClick = 3;
-  let passiveIncome = true;
+  let coinsPerClick = 1;
+  let passiveIncome = false;
   let passiveIncomeRate = 1000 / 3600;
   const counter = document.getElementById("counter");
   const rank = document.getElementById("rank");
@@ -461,10 +462,10 @@ document.addEventListener("visibilitychange", function() {
     if (usedPromoCode === "true") {
       promoResultElement.innerText = "You already used this promocode!";
       promoResultElement.className = "promo-fail";
-    } else if (promoCode === "Sweetpingvi") {
-      count += 2500;
+    } else if (promoCode === "pingvi10") {
+      count += 1000;
       localStorage.setItem("usedPromoCode", "true");
-      promoResultElement.innerText = "Promo code applied! +2500 Pingvi coins";
+      promoResultElement.innerText = "Promo code applied! +1000 Pingvi coins";
       promoResultElement.className = "promo-win";
     } else {
       promoResultElement.innerText = "Invalid promo code!";
@@ -476,9 +477,9 @@ document.addEventListener("visibilitychange", function() {
   });
 
   function updateRank() {
-    if (count < 50) rank.innerText = "Level: Newbie 🐣";
-    else if (count < 200) rank.innerText = "Level: Pingvinyonok-student 🐧";
-    else if (count < 500) rank.innerText = "Level: Boss of the snow ❄️";
+    if (count < 10) rank.innerText = "Level: Newbie 🐣";
+    else if (count < 50) rank.innerText = "Level: Pingvinyonok-student 🐧";
+    else if (count < 100) rank.innerText = "Level: Boss of the snow ❄️";
     else rank.innerText = "Level: Pingvi-Legend 🔥";
   }
 
