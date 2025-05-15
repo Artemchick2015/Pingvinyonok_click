@@ -98,6 +98,20 @@ window.onload = function() {
       status.textContent = 'Недостатньо монет для покупки апгрейду.';
     }
   });
+const buySuperUpgradeBtn = document.getElementById("buySuperUpgrade");
+buySuperUpgradeBtn.addEventListener("click", () => {
+  if (count >= 1500 && coinsPerClick < 10) {
+    count -= 1500;
+    coinsPerClick = 10;
+    counter.innerText = count;
+    updateRank();
+    alert("Super Upgrade bought! Now 10 coins per click.");
+  } else if (coinsPerClick >= 10) {
+    alert("Super Upgrade already bought!");
+  } else {
+    alert("Not enough coins!");
+  }
+});
 
   upgradePassiveBtn.addEventListener('click', () => {
     if (coins >= 1000 && !passiveIncome) {
@@ -183,3 +197,14 @@ window.onload = function() {
   updateRank();
   updateProfitPerHour();
 };
+let superUpgradeCost = 1500;
+
+document.getElementById("buySuperUpgrade").addEventListener("click", () => {
+  if (pingviCoins >= superUpgradeCost) {
+    pingviCoins -= superUpgradeCost;
+    coinsPerClick += 10;
+    updateUI();
+  } else {
+    alert("Not enough Pingvi coins!");
+  }
+});
