@@ -1,73 +1,13 @@
-
+<!-- index.html -->
+<link rel="stylesheet" href="style.css">
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Penguin Clicker 🐧</title>
-    <!-- index.html -->
-<link rel="stylesheet" href="style.css">
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
-    /* style.css */
-body {
-    background: #d0f0ff;
-    text-align: center;
-  }
-#profitPerHour {
-  font-size: 1.2em;
-  color: #fff;
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  z-index: 10;
-  padding: 10px;
-  border: 2px solid #ff0000;
-  border-radius: 8px;
-  box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
-  background-color: rgba(0, 0, 0, 0.5);
-  text-align: center;
-  animation: pulseRed 3s infinite; /* Анімація для переливу */
-}
-
-@keyframes pulseRed {
-  0% { color: #ff0000; }
-  50% { color: #ff6666; }
-  100% { color: #ff0000; }
-}
-.menu {
-  display: flex;
-  justify-content: space-between; /* Використовуємо space-between, щоб кнопки були рівно розподілені */
-  margin-top: 30px;
-  position: fixed;
-  left: 50%; /* Вирівнюємо контейнер по центру */
-  transform: translateX(-50%); /* Центруємо меню по горизонталі */
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  padding: 10px;
-  width: 100%; /* Повна ширина контейнера */
-  box-sizing: border-box; /* Щоб padding не виходив за межі */
-}
-
-.menu button {
-  padding: 6px 12px; /* Зменшення padding для кнопок */
-  font-size: 0.9em; /* Зменшення шрифту */
-  background-color: #ff0000;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  flex: 1; /* Кожна кнопка займає однакову ширину */
-  margin: 0 5px; /* Додаємо відступи між кнопками */
-  text-align: center; /* Центруємо текст в кнопках */
-}
-
-.menu button:hover {
-  background-color: #e60000;
-}
-</style>
-</head>
-<body>
   /* Лоадер */
   #loader-overlay {
     position: fixed;
@@ -103,7 +43,7 @@ body {
     background: linear-gradient(90deg, #ff4163, #ff4b2b);
     transition: width 0.2s linear;
   }
-  
+
   body {
     background: linear-gradient(135deg, #000000, #8b0000, #000000);
     background-size: 400% 400%;
@@ -396,32 +336,10 @@ body {
     <div class="upgrade-container" id="upgradeMenu">
       <p>Upgrade: 2 Pingvi coins per click = 50 coins</p>
       <button class="upgrade-button" id="buyUpgrade">Buy Upgrade</button>
-        <p>Upgrade: 10 Pingvi coins per click = 1500 coins</p>
-  <button class="upgrade-button" disabled style="opacity:0.6;cursor:not-allowed;">Buy Super Upgrade</button>
-
       <p>Passive Income: 1000 Pingvi coins per hour = 1000 coins</p>
-    <p>Super Upgrade: +10 Pingvi coins per click = 1500 coins</p>
-<button class="upgrade-button" id="buySuperUpgrade">Buy Super Upgrade</button>
-
       <button class="upgrade-button" id="buyPassiveIncome">Buy Passive Income</button>
       <span class="close-upgrade" id="closeUpgrade">Back to Penguin</span>
-    </div> <button class="upgrade-button" id="superUpgradeButton">
-  +10 Click Power (Cost: <span id="superUpgradeCost">1500</span>)
-</button>
-1 <div id="clickerArea">
-2   <h1>Penguin Clicker 🐧</h1>
-3   <p id="counter">0</p>
-4   <button id="clickButton">Клік</button>
-5
-6   <button class="upgrade-button" id="upgradeButton">
-7     +1 Click Power (Cost: <span id="upgradeCost">50</span>)
-8   </button>
-9
-10  <!-- ТУТ ДОДАЙ: -->
-11  <button class="upgrade-button" id="superUpgradeButton">
-12    +10 Click Power (Cost: <span id="superUpgradeCost">1500</span>)
-13  </button>
-
+    </div>
 
     <!-- Casino Game -->
     <div class="casino-container" id="casinoMenu">
@@ -444,8 +362,6 @@ body {
   </div>
 
 <script>
-  <div id="profitPerHour">Profit per hour: 0 coins</div>
-
   // Лоадер: анімація прогрес-бару і показ контенту через 3 секунди
   window.addEventListener('DOMContentLoaded', function() {
     const loader = document.getElementById('loader-overlay');
@@ -467,8 +383,7 @@ body {
     }
     requestAnimationFrame(animateProgressBar);
   });
-  <p id="coinsPerClickDisplay">Coins per click: 1</p>
-
+  
   // --- АВТОЗБЕРЕЖЕННЯ ---
 function autoSaveGame() {
   localStorage.setItem("coins", count);
