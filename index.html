@@ -43,7 +43,7 @@
     background: linear-gradient(90deg, #ff4163, #ff4b2b);
     transition: width 0.2s linear;
   }
-
+  
   body {
     background: linear-gradient(135deg, #000000, #8b0000, #000000);
     background-size: 400% 400%;
@@ -362,6 +362,8 @@
   </div>
 
 <script>
+  <div id="profitPerHour">Profit per hour: 0 coins</div>
+
   // Лоадер: анімація прогрес-бару і показ контенту через 3 секунди
   window.addEventListener('DOMContentLoaded', function() {
     const loader = document.getElementById('loader-overlay');
@@ -383,7 +385,8 @@
     }
     requestAnimationFrame(animateProgressBar);
   });
-  
+  <p id="coinsPerClickDisplay">Coins per click: 1</p>
+
   // --- АВТОЗБЕРЕЖЕННЯ ---
 function autoSaveGame() {
   localStorage.setItem("coins", count);
