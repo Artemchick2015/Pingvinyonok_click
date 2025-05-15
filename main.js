@@ -183,3 +183,14 @@ window.onload = function() {
   updateRank();
   updateProfitPerHour();
 };
+let superUpgradeCost = 1500;
+
+document.getElementById("buySuperUpgrade").addEventListener("click", () => {
+  if (pingviCoins >= superUpgradeCost) {
+    pingviCoins -= superUpgradeCost;
+    coinsPerClick += 10;
+    updateUI();
+  } else {
+    alert("Not enough Pingvi coins!");
+  }
+});
