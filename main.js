@@ -189,73 +189,93 @@ buyUpgradeBtn.addEventListener("click", () => {
   // ...інші умови...
 });
 
-// === ГЛОБАЛЬНІ ЗМІННІ ===
+// ===== ГЛОБАЛЬНІ ЗМІННІ =====
 let count = 0;
-let coinsPerClick = 1; // Початкове значення
-
-// Усі апгрейди у вигляді об'єкта для зручності
+let coinsPerClick = 1;
 const upgrades = {
-  double: { cost: 50, value: 2, bought: false },    // 2 монети за клік
-  quintuple: { cost: 250, value: 5, bought: false }, // 5 монет за клік
-  mega: { cost: 1000, value: 10, bought: false }    // 10 монет за клік (опція)
+  double: { cost: 50, value: 2, bought: false },
+  super: { cost: 250, value: 5, bought: false },
+  mega: { cost: 1000, value: 10, bought: false }
 };
 
-// === ОНОВЛЕНА ФУНКЦІЯ КЛІКУ ===
-document.getElementById("penguin").addEventListener("click", () => {
-  count += coinsPerClick; // Додаємо поточний множник
+// ===== ЗАВАНТАЖЕННЯ ГРИ =====
+function loadGame() {
+  const savedData = JSON.parse(localStorage.getItem("gameData")) || {};
+  
+  count = savedData.count || 0;
+  coinsPerClick = savedData.coinsPerClick || 1;
+  
+  // Оновлюємо статус апгрейдів
+  if (savedData.upgrades) {
+    Object.assign(upgrades, savedData.upgrades);
+  }
+  
   updateUI();
-});
+}
 
-// === ОБРОБНИКИ КНОПОК ===
-// Для 2 монет за клік
-document.getElementById("buyUpgrade").addEventListener("click", () => {
+// ===== ЗБЕРЕЖЕННЯ ГРИ =====
+function saveGame() {
+  const gameData = {
+    count,
+    coinsPerClick,
+    upgrades
+  };
+  localStorage.setItem("gameData", JSON.stringify(gameData));
+}
+
+// ===== ОНОВЛЕННЯ ІНТЕРФЕЙСУ =====
+function updateUI() {
+  document.getElementById("counter").textContent = count;
+  document.getElementById("coinsPerClickDisplay").textContent = `Coins per click: ${coinsPerClick}`;
+  
+  // Оновлюємо кнопки апгрейдів
+  document.getElementById("buyDouble").disabled = upgrades.double.bought;
+  document.getElementById("buySuper").disabled = upgrades.super.bought;
+  document.getElementById("buyMega").disabled = upgrades.mega.bought;
+}
+
+// ===== ОБРОБНИКИ КНОПОК =====
+document.getElementById("buyDouble").addEventListener("click", () => {
   if (!upgrades.double.bought && count >= upgrades.double.cost) {
     count -= upgrades.double.cost;
-    coinsPerClick = upgrades.double.value; // Безпосередньо змінюємо множник
+    coinsPerClick = upgrades.double.value;
     upgrades.double.bought = true;
     updateUI();
+    saveGame();
   }
 });
 
-// Для 5 монет за клік (можна купити відразу, без попередніх апгрейдів)
-document.getElementById("buySuperClick").addEventListener("click", () => {
-  if (!upgrades.quintuple.bought && count >= upgrades.quintuple.cost) {
-    count -= upgrades.quintuple.cost;
-    coinsPerClick = upgrades.quintuple.value; // Встановлюємо 5 монет за клік
-    upgrades.quintuple.bought = true;
+document.getElementById("buySuper").addEventListener("click", () => {
+  if (!upgrades.super.bought && count >= upgrades.super.cost) {
+    count -= upgrades.super.cost;
+    coinsPerClick = upgrades.super.value;
+    upgrades.super.bought = true;
     updateUI();
+    saveGame();
   }
 });
 
-// === ЗБЕРІГАННЯ/ЗАВАНТАЖЕННЯ ===
-function saveGame() {
-  localStorage.setItem("coins", count);
-  localStorage.setItem("coinsPerClick", coinsPerClick);
-  localStorage.setItem("upgrades", JSON.stringify(upgrades));
-}
+document.getElementById("buyMega").addEventListener("click", () => {
+  if (!upgrades.mega.bought && count >= upgrades.mega.cost) {
+    count -= upgrades.mega.cost;
+    coinsPerClick = upgrades.mega.value;
+    upgrades.mega.bought = true;
+    updateUI();
+    saveGame();
+  }
+});
 
-function loadGame() {
-  const savedUpgrades = localStorage.getItem("upgrades");
-  if (savedUpgrades) Object.assign(upgrades, JSON.parse(savedUpgrades));
+// ===== ЗАПУСК ГРИ =====
+window.onload = function() {
+  loadGame();
   
-  // Відновлюємо поточний множник
-  if (upgrades.quintuple.bought) coinsPerClick = 5;
-  else if (upgrades.double.bought) coinsPerClick = 2;
-  else coinsPerClick = 1;
-  
-  updateUI();
-}
-
-// === ВІЗУАЛЬНІ ПОЛІПШЕННЯ ===
-function updateUI() {
-  document.getElementById("counter").textContent = Math.floor(count);
-  document.getElementById("coinsPerClickDisplay").textContent = 
-    `Coins per click: ${coinsPerClick}`;
-  
-  // Оновлюємо статус кнопок
-  document.getElementById("buyUpgrade").disabled = upgrades.double.bought;
-  document.getElementById("buySuperClick").disabled = upgrades.quintuple.bought;
-}
+  // Клік по пінгвіну
+  document.getElementById("penguin").addEventListener("click", () => {
+    count += coinsPerClick;
+    updateUI();
+    saveGame();
+  });
+};
 // Після завантаження гри:
 window.onload = function() {
   // ...твій код...
