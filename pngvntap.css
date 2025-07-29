@@ -18,24 +18,6 @@ body {
   text-align: center;
   animation: pulseRed 3s infinite; /* Анімація для переливу */
 }
-/* Якщо кнопка не відображається */
-#buySuperClick {
-  display: block !important; /* Примусово показуємо */
-  opacity: 1 !important;
-  pointer-events: auto !important;
-}
-
-/* Якщо кнопка не реагує на натискання */
-.upgrade-button {
-  cursor: pointer; /* Курсор "рука" при наведенні */
-  user-select: none; /* Заборонити виділення тексту */
-}
-
-/* Стиль для заблокованої кнопки */
-.upgrade-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
 
 @keyframes pulseRed {
   0% { color: #ff0000; }
