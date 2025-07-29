@@ -19,6 +19,10 @@ body {
   animation: pulseRed 3s infinite; /* Анімація для переливу */
 }
 
+.upgrade-button[disabled] {
+  opacity: 0.7;
+  background-color: #555 !important;
+}
 #buySuperClick {
   display: none; /* Приховано, поки не куплено перший апгрейд */
   background-color: #ff9900;
