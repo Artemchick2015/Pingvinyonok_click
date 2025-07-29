@@ -19,6 +19,14 @@ body {
   animation: pulseRed 3s infinite; /* Анімація для переливу */
 }
 
+#buySuperClick {
+  display: none; /* Приховано, поки не куплено перший апгрейд */
+  background-color: #ff9900;
+}
+
+#buySuperClick:hover {
+  background-color: #e68a00;
+}
 @keyframes pulseRed {
   0% { color: #ff0000; }
   50% { color: #ff6666; }
