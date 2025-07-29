@@ -5,7 +5,50 @@ let passiveIncome = false;
 let passiveIncomeRate = 1000 / 3600;
 let boostActive = false;
 let normalCoinsPerClick = 1;
+// У глобальних змінних додаємо:
+let superClickUnlocked = false;
+let superClickBought = false;
 
+// В функції loadGame() додаємо:
+if (localStorage.getItem("superClickUnlocked") === "true") superClickUnlocked = true;
+if (localStorage.getItem("superClickBought") === "true") superClickBought = true;
+
+// В функції saveGame() додаємо:
+localStorage.setItem("superClickUnlocked", superClickUnlocked);
+localStorage.setItem("superClickBought", superClickBought);
+
+// Обробник для першого апгрейду (2 монети):
+document.getElementById("buyUpgrade").addEventListener("click", () => {
+  if (count >= 50 && coinsPerClick === 1) {
+    count -= 50;
+    coinsPerClick = 2;
+    superClickUnlocked = true; // Розблоковуємо наступний рівень
+    document.getElementById("buySuperClick").style.display = "block"; // Показуємо кнопку
+    updateUI();
+  }
+});
+
+// Обробник для супер-кліку (5 монет):
+document.getElementById("buySuperClick").addEventListener("click", () => {
+  if (count >= 250 && superClickUnlocked && !superClickBought) {
+    count -= 250;
+    coinsPerClick = 5;
+    superClickBought = true;
+    updateUI();
+  }
+});
+
+// В updateUI() додаємо:
+function updateUI() {
+  // ... ваш існуючий код ...
+  if (superClickUnlocked) {
+    document.getElementById("buySuperClick").style.display = "block";
+  }
+  if (superClickBought) {
+    document.getElementById("buySuperClick").disabled = true;
+    document.getElementById("buySuperClick").textContent = "Already bought!";
+  }
+}
 // --- ІНІЦІАЛІЗАЦІЯ ---
 window.onload = function() {
   // Завантаження збережених даних
