@@ -1,32 +1,57 @@
-// --- АВТОЗБЕРЕЖЕННЯ ---
-function autoSaveGame() {
-  localStorage.setItem("coins", count);
-  localStorage.setItem("coinsPerClick", coinsPerClick);
-  localStorage.setItem("passiveIncome", passiveIncome);
-}
-window.addEventListener("beforeunload", autoSaveGame);
-document.addEventListener("visibilitychange", function() {
-  if (document.visibilityState === "hidden") autoSaveGame();
-});
+// Змінні гри
 let coins = 0;
 let coinsPerClick = 1;
 let passiveIncome = false;
 
+// Елементи DOM
 const coinsDisplay = document.getElementById('coins');
 const status = document.getElementById('status');
 const clickPenguinBtn = document.getElementById('clickPenguin');
 const upgradeClickBtn = document.getElementById('upgradeClick');
 const upgradePassiveBtn = document.getElementById('upgradePassive');
+const promoInput = document.getElementById('promoInput');
+const applyPromoBtn = document.getElementById('applyPromoBtn');
+const promoStatus = document.getElementById('promoStatus');
 
+const rpsButtons = document.querySelectorAll(".rps-btn");
+const rpsResult = document.getElementById("rps-result");
+
+// Функція оновлення показу монет
 function updateDisplay() {
   coinsDisplay.textContent = `Монети: ${coins}`;
 }
 
+// Функція автозбереження гри
+function autoSaveGame() {
+  localStorage.setItem("coins", coins);
+  localStorage.setItem("coinsPerClick", coinsPerClick);
+  localStorage.setItem("passiveIncome", passiveIncome);
+}
+
+// Завантаження збережених даних
+function loadGame() {
+  const savedCoins = localStorage.getItem("coins");
+  const savedCPC = localStorage.getItem("coinsPerClick");
+  const savedPassive = localStorage.getItem("passiveIncome");
+
+  if (savedCoins !== null) coins = parseInt(savedCoins);
+  if (savedCPC !== null) coinsPerClick = parseInt(savedCPC);
+  if (savedPassive !== null) passiveIncome = (savedPassive === 'true');
+
+  updateDisplay();
+
+  if (coinsPerClick > 1) upgradeClickBtn.disabled = true;
+  if (passiveIncome) upgradePassiveBtn.disabled = true;
+}
+
+// Основна логіка кліку
 clickPenguinBtn.addEventListener('click', () => {
   coins += coinsPerClick;
   updateDisplay();
+  status.textContent = '';
 });
 
+// Логіка апгрейду кліку
 upgradeClickBtn.addEventListener('click', () => {
   if (coins >= 50 && coinsPerClick === 1) {
     coins -= 50;
@@ -41,6 +66,7 @@ upgradeClickBtn.addEventListener('click', () => {
   }
 });
 
+// Логіка пасивного доходу
 upgradePassiveBtn.addEventListener('click', () => {
   if (coins >= 1000 && !passiveIncome) {
     coins -= 1000;
@@ -55,7 +81,7 @@ upgradePassiveBtn.addEventListener('click', () => {
   }
 });
 
-// Пасивний дохід: додаємо 1 монету кожні 3.6 секунди (1000 монет на годину)
+// Пасивний дохід: +1 монета кожні 3.6 секунди
 setInterval(() => {
   if (passiveIncome) {
     coins += 1;
@@ -63,148 +89,53 @@ setInterval(() => {
   }
 }, 3600);
 
-updateDisplay();
-window.onload = function() {
-  let coins = 0;
-  let coinsPerClick = 1;
-  let passiveIncome = false;
-
-  const coinsDisplay = document.getElementById('coins');
-  const status = document.getElementById('status');
-  const clickPenguinBtn = document.getElementById('clickPenguin');
-  const upgradeClickBtn = document.getElementById('upgradeClick');
-  const upgradePassiveBtn = document.getElementById('upgradePassive');
-
-  function updateDisplay() {
-    coinsDisplay.textContent = `Монети: ${coins}`;
-  }
-
-  clickPenguinBtn.addEventListener('click', () => {
-    coins += coinsPerClick;
+// ПРОМОКОД логіка
+applyPromoBtn.addEventListener('click', () => {
+  const code = promoInput.value.trim().toLowerCase();
+  if (code === 'freecoins') {
+    coins += 100;
     updateDisplay();
-    status.textContent = '';
-  });
-
-  upgradeClickBtn.addEventListener('click', () => {
-    if (coins >= 50 && coinsPerClick === 1) {
-      coins -= 50;
-      coinsPerClick = 2;
-      updateDisplay();
-      status.textContent = 'Апгрейд куплено! Тепер 2 монети за клік.';
-      upgradeClickBtn.disabled = true;
-    } else if (coinsPerClick > 1) {
-      status.textContent = 'Апгрейд вже куплено!';
-    } else {
-      status.textContent = 'Недостатньо монет для покупки апгрейду.';
-    }
-  });
-const buySuperUpgradeBtn = document.getElementById("buySuperUpgrade");
-buySuperUpgradeBtn.addEventListener("click", () => {
-  if (count >= 1500 && coinsPerClick < 10) {
-    count -= 1500;
-    coinsPerClick = 10;
-    counter.innerText = count;
-    updateRank();
-    alert("Super Upgrade bought! Now 10 coins per click.");
-  } else if (coinsPerClick >= 10) {
-    alert("Super Upgrade already bought!");
+    promoStatus.textContent = 'Промокод активовано! +100 монет 🎉';
   } else {
-    alert("Not enough coins!");
+    promoStatus.textContent = 'Невірний промокод.';
   }
+  promoInput.value = '';
 });
 
-  upgradePassiveBtn.addEventListener('click', () => {
-    if (coins >= 1000 && !passiveIncome) {
-      coins -= 1000;
-      passiveIncome = true;
-      updateDisplay();
-      status.textContent = 'Пасивний дохід активовано!';
-      upgradePassiveBtn.disabled = true;
-    } else if (passiveIncome) {
-      status.textContent = 'Пасивний дохід вже активовано!';
-    } else {
-      status.textContent = 'Недостатньо монет для покупки пасивного доходу.';
-    }
+// Камінь-ножиці-папір логіка
+function getComputerChoice() {
+  const choices = ["rock", "paper", "scissors"];
+  return choices[Math.floor(Math.random() * choices.length)];
+}
+
+function decideWinner(player, computer) {
+  if (player === computer) return "Нічия! 🎲";
+  if (
+    (player === "rock" && computer === "scissors") ||
+    (player === "scissors" && computer === "paper") ||
+    (player === "paper" && computer === "rock")
+  ) return "Ви виграли! 🎉";
+  return "Ви програли! 😞";
+}
+
+rpsButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    const playerChoice = button.getAttribute("data-choice");
+    const computerChoice = getComputerChoice();
+    const resultText = `Ви вибрали: ${playerChoice}, Комп'ютер вибрав: ${computerChoice}. ${decideWinner(playerChoice, computerChoice)}`;
+    rpsResult.textContent = resultText;
   });
+});
 
-  // Пасивний дохід: додаємо 1 монету кожні 3.6 секунди (1000 монет на годину)
-  setInterval(() => {
-    if (passiveIncome) {
-      coins += 1;
-      updateDisplay();
-    }
-  }, 3600);
+// Автозбереження при закритті і приховуванні сторінки
+window.addEventListener("beforeunload", autoSaveGame);
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "hidden") autoSaveGame();
+});
 
+// Завантаження гри при відкритті сторінки
+window.onload = () => {
+  loadGame();
   updateDisplay();
+  status.textContent = '';
 };
-// --- BOOST LOGIC ---
-let clickTimes = [];
-let boostActive = false;
-let boostTimeout = null;
-let normalCoinsPerClick = 1; // базове значення
-
-function activateBoost() {
-  if (boostActive) return;
-  boostActive = true;
-  normalCoinsPerClick = coinsPerClick;
-  coinsPerClick = normalCoinsPerClick * 2;
-  penguin.classList.add('boosted');
-  boostTimeout = setTimeout(() => {
-    boostActive = false;
-    coinsPerClick = normalCoinsPerClick;
-    penguin.classList.remove('boosted');
-  }, 7000);
-}
-function updateCoinsPerClickDisplay() {
-  document.getElementById("coinsPerClickDisplay").innerText = `Coins per click: ${coinsPerClick}`;
-}
-buyUpgradeBtn.addEventListener("click", () => {
-  if (count >= 50 && coinsPerClick === 1) {
-    count -= 50;
-    coinsPerClick = 2;
-    counter.innerText = count;
-    updateCoinsPerClickDisplay();
-    updateRank();
-    alert("Upgrade bought! Now 2 coins per click.");
-  } else if (coinsPerClick > 1) {
-    alert("Upgrade already bought!");
-  } else {
-    alert("Not enough coins!");
-  }
-});
-function updateCoinsPerClickDisplay() {
-  document.getElementById("coinsPerClickDisplay").innerText = `Coins per click: ${coinsPerClick}`;
-}
-
-// При апгрейді:
-buyUpgradeBtn.addEventListener("click", () => {
-  if (count >= 50 && coinsPerClick === 1) {
-    count -= 50;
-    coinsPerClick = 2;
-    counter.innerText = count;
-    updateCoinsPerClickDisplay();
-    updateRank();
-    alert("Upgrade bought! Now 2 coins per click.");
-  }
-  // ...інші умови...
-});
-
-// Після завантаження гри:
-window.onload = function() {
-  // ...твій код...
-  counter.innerText = count;
-  updateCoinsPerClickDisplay();
-  updateRank();
-  updateProfitPerHour();
-};
-let superUpgradeCost = 1500;
-
-document.getElementById("buySuperUpgrade").addEventListener("click", () => {
-  if (pingviCoins >= superUpgradeCost) {
-    pingviCoins -= superUpgradeCost;
-    coinsPerClick += 10;
-    updateUI();
-  } else {
-    alert("Not enough Pingvi coins!");
-  }
-});
