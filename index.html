@@ -257,6 +257,17 @@
   .casino-win {
     color: green;
   }
+  <div id="rpsGame" style="margin-top: 20px; text-align: center;">
+  <h2>Камінь-Ножиці-Папір</h2>
+  <p>Ставка (пінгві-койни): <input type="number" id="rpsBet" min="1" value="10"></p>
+  <div>
+    <button onclick="playRPS('rock')">🪨 Камінь</button>
+    <button onclick="playRPS('scissors')">✂️ Ножиці</button>
+    <button onclick="playRPS('paper')">📄 Папір</button>
+  </div>
+  <p id="rpsResult" style="margin-top: 10px;"></p>
+</div>
+
   .promo-container {
     display: none;
     text-align: center;
