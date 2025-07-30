@@ -609,6 +609,34 @@ document.addEventListener("visibilitychange", function() {
     window.open('https://t.me/PNGVNyonoks', '_blank');
   });
 </script>
+<script>
+  const subscribeBtn = document.getElementById('subscribeBtn');
+
+  const subscribed = localStorage.getItem("subscribedBonusGiven") === "true";
+
+  if (subscribed) {
+    subscribeBtn.innerText = "Subscribed ✅";
+    subscribeBtn.disabled = true;
+    subscribeBtn.style.backgroundColor = "#aaa";
+    subscribeBtn.style.cursor = "default";
+  }
+
+  subscribeBtn.addEventListener('click', () => {
+    if (!subscribed) {
+      count += 250;
+      localStorage.setItem("coins", count);
+      localStorage.setItem("subscribedBonusGiven", "true");
+
+      document.getElementById("counter").innerText = Math.floor(count);
+      subscribeBtn.innerText = "Subscribed ✅";
+      subscribeBtn.disabled = true;
+      subscribeBtn.style.backgroundColor = "#aaa";
+      subscribeBtn.style.cursor = "default";
+    }
+
+    window.open('https://t.me/PNGVNyonoks', '_blank');
+  });
+</script>
 
 </body>
 </html>
