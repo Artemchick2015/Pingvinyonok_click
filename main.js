@@ -113,6 +113,31 @@ buySuperUpgradeBtn.addEventListener("click", () => {
   }
 });
 
+  const buySuperUpgradeBtn = document.getElementById("buySuperUpgrade");
+
+buySuperUpgradeBtn.addEventListener("click", () => {
+  if (count >= 250 && coinsPerClick < 5) {
+    count -= 250;
+    coinsPerClick = 5;
+    counter.innerText = count;
+    updateRank();
+    alert("Super Upgrade bought! Now 5 coins per click.");
+    buySuperUpgradeBtn.disabled = true; // Заборонити повторну покупку
+  } else if (coinsPerClick >= 5) {
+    alert("Super Upgrade already bought!");
+  } else {
+    alert("Not enough coins!");
+  }
+});
+window.onload = function() {
+  // ...твой існуючий код...
+  
+  // Відключаємо кнопку, якщо апгрейд вже куплений
+  if (coinsPerClick >= 5) {
+    buySuperUpgradeBtn.disabled = true;
+  }
+};
+
   upgradePassiveBtn.addEventListener('click', () => {
     if (coins >= 1000 && !passiveIncome) {
       coins -= 1000;
