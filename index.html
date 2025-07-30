@@ -339,6 +339,44 @@
       <p>Passive Income: 1000 Pingvi coins per hour = 1000 coins</p>
       <button class="upgrade-button" id="buyPassiveIncome">Buy Passive Income</button>
       <span class="close-upgrade" id="closeUpgrade">Back to Penguin</span>
+    <!-- ... твій повний код ... -->
+
+<!-- В upgradeMenu після існуючих кнопок -->
+<div class="upgrade-container" id="upgradeMenu">
+  <p>Upgrade: 2 Pingvi coins per click = 50 coins</p>
+  <button class="upgrade-button" id="buyUpgrade">Buy Upgrade</button>
+  <p>Upgrade: 5 Pingvi coins per click = 250 coins</p>
+  <button class="upgrade-button" id="buyUpgradeFive">Buy 5 coins per click (250 coins)</button>
+  <p>Passive Income: 1000 Pingvi coins per hour = 1000 coins</p>
+  <button class="upgrade-button" id="buyPassiveIncome">Buy Passive Income</button>
+  <span class="close-upgrade" id="closeUpgrade">Back to Penguin</span>
+</div>
+
+<script>
+// ... твій існуючий код ...
+
+const buyUpgradeFiveBtn = document.getElementById("buyUpgradeFive");
+
+buyUpgradeFiveBtn.addEventListener("click", () => {
+  if (count >= 250 && coinsPerClick < 5) {
+    count -= 250;
+    coinsPerClick = 5;
+    counter.innerText = count;
+    updateRank();
+    alert("Upgrade bought! Now 5 coins per click.");
+  } else if (coinsPerClick >= 5) {
+    alert("You already have this upgrade or better!");
+  } else {
+    alert("Not enough coins!");
+  }
+});
+
+// Зберігання і завантаження потрібно підкоригувати, щоб врахувати coinsPerClick 5
+// (у тебе вже збереження coinsPerClick, тому воно автоматично підтримується)
+
+// решта твого коду без змін
+</script>
+
     </div>
 
     <!-- Casino Game -->
