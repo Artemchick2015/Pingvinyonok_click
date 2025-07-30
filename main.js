@@ -127,6 +127,27 @@ buySuperUpgradeBtn.addEventListener("click", () => {
     }
   });
 
+  // додатковий апгрейд
+const buyUpgradeFiveBtn = document.createElement("button");
+buyUpgradeFiveBtn.className = "upgrade-button";
+buyUpgradeFiveBtn.id = "buyUpgradeFive";
+buyUpgradeFiveBtn.textContent = "Buy 5 coins per click (250 coins)";
+document.getElementById("upgradeMenu").appendChild(buyUpgradeFiveBtn);
+
+buyUpgradeFiveBtn.addEventListener("click", () => {
+  if (count >= 250 && coinsPerClick < 5) {
+    count -= 250;
+    coinsPerClick = 5;
+    counter.innerText = count;
+    updateRank();
+    alert("Upgrade bought! Now 5 coins per click.");
+  } else if (coinsPerClick >= 5) {
+    alert("You already have this upgrade or better!");
+  } else {
+    alert("Not enough coins!");
+  }
+});
+
   // Пасивний дохід: додаємо 1 монету кожні 3.6 секунди (1000 монет на годину)
   setInterval(() => {
     if (passiveIncome) {
