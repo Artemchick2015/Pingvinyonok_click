@@ -566,23 +566,26 @@ document.addEventListener("visibilitychange", function() {
     updateProfitPerHour();
   });
 </script>
-  <!-- Subscription Banner -->
+<!-- Subscription Banner -->
 <div id="subscribeBanner" style="
     position: fixed;
-    bottom: 0;
+    bottom: 20px; /* Підняли банер вище */
     left: 0;
     width: 100%;
+    max-width: 600px; /* Можна задати максимальну ширину, щоб не було дуже широким */
+    margin: 0 auto; /* Центруємо банер по горизонталі */
     background-color: #1a73e8;
     color: #fff;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: 600;
     padding: 15px 25px;
-    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
     display: flex;
     justify-content: space-between;
     align-items: center;
     z-index: 9999;
     user-select: none;
+    border-radius: 8px;
 ">
   <div>Subscribe to our community and earn <strong>+250 Pingvi Coins</strong></div>
   <button id="subscribeBtn" style="
@@ -607,6 +610,7 @@ document.addEventListener("visibilitychange", function() {
     window.open('https://t.me/PNGVNyonoks', '_blank');
   });
 </script>
+
 
 </body>
 </html>
