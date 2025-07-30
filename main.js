@@ -65,7 +65,6 @@ setInterval(() => {
 
 updateDisplay();
 window.onload = function() {
-  window.onload = function() {
   // Завантажуємо монети та останню дату бонусу з localStorage
   let pingviCoins = parseInt(localStorage.getItem('pingviCoins')) || 0;
   let lastBonusDate = localStorage.getItem('lastBonusDate'); // формат YYYY-MM-DD
