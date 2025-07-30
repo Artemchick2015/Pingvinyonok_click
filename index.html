@@ -396,6 +396,17 @@ document.addEventListener("visibilitychange", function() {
 });
 
 
+ <button id="playBtn">Увімкнути музику</button>
+
+<script>
+  const audio = new Audio('https://Artemchick2015.github.io/Pingvinyonok_click/Di%20Young%20Pixel%20Pig.mp3');
+  audio.loop = true;
+
+  document.getElementById('playBtn').addEventListener('click', () => {
+    audio.play();
+  });
+</script>
+
   // --- Логіка гри ---
   let count = 0;
   let coinsPerClick = 1;
@@ -481,9 +492,6 @@ document.addEventListener("visibilitychange", function() {
     else if (count < 100) rank.innerText = "Level: Boss of the snow ❄️";
     else rank.innerText = "Level: Pingvi-Legend 🔥";
   }
-
-  <audio id="myAudio" src="https://Artemchick2015.github.io/Pingvinyonok_click/Di%20Young%20Pixel%20Pig.mp3" controls loop></audio>
-
 
   function updateProfitPerHour() {
     if (passiveIncome) {
