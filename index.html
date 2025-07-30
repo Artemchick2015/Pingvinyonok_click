@@ -636,6 +636,10 @@ document.addEventListener("visibilitychange", function() {
 
     window.open('https://t.me/PNGVNyonoks', '_blank');
   });
+  const music = document.getElementById('backgroundMusic');
+music.volume = 0.3;  // Встановити гучність на 30%
+music.muted = false; // Якщо хочеш, щоб було не заглушено
+
 </script>
 <audio id="backgroundMusic" autoplay loop muted>
   <source src="Di Young Pixel Pig.mp3" type="audio/mpeg" />
