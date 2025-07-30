@@ -51,6 +51,22 @@ body {
   text-align: center; /* Центруємо текст в кнопках */
 }
 
+#rpsGame button {
+  padding: 10px 20px;
+  margin: 5px;
+  font-size: 1em;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+#rpsGame button:hover {
+  background-color: #0056b3;
+}
+
+
 .menu button:hover {
   background-color: #e60000;
 }
