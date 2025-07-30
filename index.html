@@ -569,10 +569,11 @@ document.addEventListener("visibilitychange", function() {
 <!-- Subscription Banner -->
 <div id="subscribeBanner" style="
     position: fixed;
-    bottom: 50px; /* Піднято на 50px від низу */
-    left: -30px;   /* Зсунено вліво ще на 50px від попереднього (20px - 50px = -30px) */
-    width: calc(100% + 30px); /* Збільшена ширина, щоб банер не обрізався */
-    max-width: 600px; /* Максимальна ширина */
+    bottom: 50px;
+    left: 0;
+    width: calc(100% - 50px); /* Зменшено на 50px */
+    max-width: 600px;
+    margin: 0 25px; /* Щоб було по центру при зменшеній ширині */
     background-color: #1a73e8;
     color: #fff;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
