@@ -65,31 +65,6 @@ setInterval(() => {
 
 updateDisplay();
 window.onload = function() {
-  // Завантажуємо монети та останню дату бонусу з localStorage
-  let pingviCoins = parseInt(localStorage.getItem('pingviCoins')) || 0;
-  let lastBonusDate = localStorage.getItem('lastBonusDate'); // формат YYYY-MM-DD
-
-  // Отримуємо сьогоднішню дату у форматі YYYY-MM-DD
-  let today = new Date().toISOString().slice(0, 10);
-
-  // Якщо сьогоднішня дата відрізняється від останньої дати отримання бонусу
-  if (lastBonusDate !== today) {
-    pingviCoins += 500; // додаємо бонус
-    localStorage.setItem('pingviCoins', pingviCoins);
-    localStorage.setItem('lastBonusDate', today);
-    alert('Daily bonus: 500 Pingvi coins awarded!');
-  }
-
-  // Оновлюємо UI
-  updateUI();
-
-  // Інші дії завантаження гри
-};
-
-function updateUI() {
-  document.getElementById('coinsDisplay').innerText = `Pingvi Coins: ${pingviCoins}`;
-}
-
   let coins = 0;
   let coinsPerClick = 1;
   let passiveIncome = false;
@@ -151,50 +126,6 @@ buySuperUpgradeBtn.addEventListener("click", () => {
       status.textContent = 'Недостатньо монет для покупки пасивного доходу.';
     }
   });
-
-function playRPS(playerChoice) {
-  const betInput = document.getElementById("rpsBet");
-  const resultDisplay = document.getElementById("rpsResult");
-  const betAmount = parseInt(betInput.value);
-
-  if (isNaN(betAmount) || betAmount <= 0) {
-    resultDisplay.textContent = "❌ Введіть коректну ставку.";
-    return;
-  }
-
-  if (coins < betAmount) {
-    resultDisplay.textContent = "❌ Недостатньо монет для ставки.";
-    return;
-  }
-
-  const choices = ['rock', 'paper', 'scissors'];
-  const botChoice = choices[Math.floor(Math.random() * 3)];
-
-  let result = "";
-  if (playerChoice === botChoice) {
-    result = "🤝 Нічия! Ставка повертається.";
-  } else if (
-    (playerChoice === 'rock' && botChoice === 'scissors') ||
-    (playerChoice === 'scissors' && botChoice === 'paper') ||
-    (playerChoice === 'paper' && botChoice === 'rock')
-  ) {
-    coins += betAmount; // виграш
-    result = `✅ Ти виграв! Бот вибрав ${getEmoji(botChoice)}. +${betAmount} монет.`;
-  } else {
-    coins -= betAmount; // програш
-    result = `❌ Ти програв. Бот вибрав ${getEmoji(botChoice)}. -${betAmount} монет.`;
-  }
-
-  updateDisplay();
-  resultDisplay.textContent = result;
-}
-
-function getEmoji(choice) {
-  if (choice === "rock") return "🪨";
-  if (choice === "paper") return "📄";
-  if (choice === "scissors") return "✂️";
-}
-
 
   // Пасивний дохід: додаємо 1 монету кожні 3.6 секунди (1000 монет на годину)
   setInterval(() => {
