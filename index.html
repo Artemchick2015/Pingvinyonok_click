@@ -124,20 +124,6 @@
     100% { transform: scale(2.5); opacity: 0; }
   }
 
-  <audio id="bg-music" src="https://github.com/Artemchick2015/Pingvinyonok_click/raw/main/Di%20Young%20Pixel%20Pig.mp3" loop></audio>
-
-<button id="playMusicBtn">Play Music</button>
-
-<script>
-  const music = document.getElementById('bg-music');
-  const btn = document.getElementById('playMusicBtn');
-
-  btn.addEventListener('click', () => {
-    music.play();
-  });
-</script>
-
-
   /* Меню з кнопками знизу з горизонтальною прокруткою */
   .menu-wrapper {
     position: fixed;
@@ -495,6 +481,9 @@ document.addEventListener("visibilitychange", function() {
     else if (count < 100) rank.innerText = "Level: Boss of the snow ❄️";
     else rank.innerText = "Level: Pingvi-Legend 🔥";
   }
+
+  <audio id="myAudio" src="https://Artemchick2015.github.io/Pingvinyonok_click/Di%20Young%20Pixel%20Pig.mp3" controls loop></audio>
+
 
   function updateProfitPerHour() {
     if (passiveIncome) {
