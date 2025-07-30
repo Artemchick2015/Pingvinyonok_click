@@ -257,17 +257,6 @@
   .casino-win {
     color: green;
   }
-  <div id="rpsGame" style="margin-top: 20px; text-align: center;">
-  <h2>Камінь-Ножиці-Папір</h2>
-  <p>Ставка (пінгві-койни): <input type="number" id="rpsBet" min="1" value="10"></p>
-  <div>
-    <button onclick="playRPS('rock')">🪨 Камінь</button>
-    <button onclick="playRPS('scissors')">✂️ Ножиці</button>
-    <button onclick="playRPS('paper')">📄 Папір</button>
-  </div>
-  <p id="rpsResult" style="margin-top: 10px;"></p>
-</div>
-
   .promo-container {
     display: none;
     text-align: center;
@@ -361,6 +350,18 @@
       <div class="casino-result" id="casinoResult"></div>
     </div>
   </div>
+
+  <div id="rpsGame" style="margin-top: 40px;">
+  <h3>🎮 Камінь-Ножиці-Папір</h3>
+  <label>Ставка (в PingviCoins): </label>
+  <input type="number" id="rpsBet" min="1" value="10" style="width: 60px;">
+  <div style="margin-top: 10px;">
+    <button onclick="playRPS('rock')">🪨 Камінь</button>
+    <button onclick="playRPS('scissors')">✂️ Ножиці</button>
+    <button onclick="playRPS('paper')">📄 Папір</button>
+  </div>
+  <p id="rpsResult" style="margin-top: 15px; font-weight: bold;"></p>
+</div>
 
   <!-- Меню кнопок знизу з горизонтальною прокруткою -->
   <div class="menu-wrapper" tabindex="0" aria-label="Main menu">
