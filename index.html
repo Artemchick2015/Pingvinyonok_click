@@ -569,11 +569,10 @@ document.addEventListener("visibilitychange", function() {
 <!-- Subscription Banner -->
 <div id="subscribeBanner" style="
     position: fixed;
-    bottom: 20px; /* Підняли банер вище */
-    left: 0;
-    width: 100%;
-    max-width: 600px; /* Можна задати максимальну ширину, щоб не було дуже широким */
-    margin: 0 auto; /* Центруємо банер по горизонталі */
+    bottom: 50px; /* Піднято на 50px від низу */
+    left: 20px;   /* Зсунено вліво на 20px */
+    width: calc(100% - 40px); /* Ширина з урахуванням відступів зліва і справа */
+    max-width: 600px; /* Максимальна ширина */
     background-color: #1a73e8;
     color: #fff;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -610,7 +609,6 @@ document.addEventListener("visibilitychange", function() {
     window.open('https://t.me/PNGVNyonoks', '_blank');
   });
 </script>
-
 
 </body>
 </html>
