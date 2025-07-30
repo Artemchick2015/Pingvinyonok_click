@@ -566,5 +566,47 @@ document.addEventListener("visibilitychange", function() {
     updateProfitPerHour();
   });
 </script>
+  <!-- Subscription Banner -->
+<div id="subscribeBanner" style="
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #1a73e8;
+    color: #fff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 600;
+    padding: 15px 25px;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.25);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 9999;
+    user-select: none;
+">
+  <div>Subscribe to our community and earn <strong>+250 Pingvi Coins</strong></div>
+  <button id="subscribeBtn" style="
+      background-color: #ffcc00;
+      color: #000;
+      border: none;
+      padding: 12px 28px;
+      font-weight: 700;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      user-select: none;
+  " 
+  onmouseover="this.style.backgroundColor='#ffdb4d'" 
+  onmouseout="this.style.backgroundColor='#ffcc00'">
+    Subscribe
+  </button>
+</div>
+
+<script>
+  document.getElementById('subscribeBtn').addEventListener('click', () => {
+    window.open('https://t.me/PNGVNyonoks', '_blank');
+  });
+</script>
+
 </body>
 </html>
