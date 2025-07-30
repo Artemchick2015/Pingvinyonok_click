@@ -152,6 +152,50 @@ buySuperUpgradeBtn.addEventListener("click", () => {
     }
   });
 
+function playRPS(playerChoice) {
+  const betInput = document.getElementById("rpsBet");
+  const resultDisplay = document.getElementById("rpsResult");
+  const betAmount = parseInt(betInput.value);
+
+  if (isNaN(betAmount) || betAmount <= 0) {
+    resultDisplay.textContent = "❌ Введіть коректну ставку.";
+    return;
+  }
+
+  if (coins < betAmount) {
+    resultDisplay.textContent = "❌ Недостатньо монет для ставки.";
+    return;
+  }
+
+  const choices = ['rock', 'paper', 'scissors'];
+  const botChoice = choices[Math.floor(Math.random() * 3)];
+
+  let result = "";
+  if (playerChoice === botChoice) {
+    result = "🤝 Нічия! Ставка повертається.";
+  } else if (
+    (playerChoice === 'rock' && botChoice === 'scissors') ||
+    (playerChoice === 'scissors' && botChoice === 'paper') ||
+    (playerChoice === 'paper' && botChoice === 'rock')
+  ) {
+    coins += betAmount; // виграш
+    result = `✅ Ти виграв! Бот вибрав ${getEmoji(botChoice)}. +${betAmount} монет.`;
+  } else {
+    coins -= betAmount; // програш
+    result = `❌ Ти програв. Бот вибрав ${getEmoji(botChoice)}. -${betAmount} монет.`;
+  }
+
+  updateDisplay();
+  resultDisplay.textContent = result;
+}
+
+function getEmoji(choice) {
+  if (choice === "rock") return "🪨";
+  if (choice === "paper") return "📄";
+  if (choice === "scissors") return "✂️";
+}
+
+
   // Пасивний дохід: додаємо 1 монету кожні 3.6 секунди (1000 монет на годину)
   setInterval(() => {
     if (passiveIncome) {
