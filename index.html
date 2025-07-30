@@ -636,35 +636,8 @@ document.addEventListener("visibilitychange", function() {
 
     window.open('https://t.me/PNGVNyonoks', '_blank');
   });
-  let isBoosted = false;
-let originalCoinsPerClick = coinsPerClick;
-
-// Функція запуску бусту
-function activatePenguinBoost() {
-  if (isBoosted) return;
-
-  isBoosted = true;
-  originalCoinsPerClick = coinsPerClick;
-  coinsPerClick *= 2;
-
-  // Візуальний ефект
-  penguin.classList.add("boosted");
-
-  // Після 15 секунд — скидаємо буст
-  setTimeout(() => {
-    isBoosted = false;
-    coinsPerClick = originalCoinsPerClick;
-    penguin.classList.remove("boosted");
-  }, 15000);
-}
-
-// Запускаємо буст кожні 2 хвилини
-setInterval(() => {
-  activatePenguinBoost();
-}, 120000);
-
 </script>
-
 
 </body>
 </html>
+
