@@ -664,49 +664,7 @@ setInterval(() => {
 }, 120000);
 
 </script>
-<script>
-  let isBoosted = false;
-  let coinsPerClick = 1; // приклад початкової кількості
-  let originalCoinsPerClick = coinsPerClick;
 
-  const penguin = document.querySelector('.penguin-wrapper'); // або твій селектор пінгвіна
-
-  function createFireSticker() {
-    const fire = document.createElement('div');
-    fire.classList.add('fire-sticker');
-    fire.style.top = (Math.random() * 160 + 10) + 'px';
-    fire.style.left = (Math.random() * 160 + 10) + 'px';
-    return fire;
-  }
-
-  function activatePenguinBoost() {
-    if (isBoosted) return;
-
-    isBoosted = true;
-    originalCoinsPerClick = coinsPerClick;
-    coinsPerClick *= 2;
-
-    penguin.classList.add("boosted");
-
-    const fireStickers = [];
-    for (let i = 0; i < 5; i++) {
-      const fire = createFireSticker();
-      penguin.appendChild(fire);
-      fireStickers.push(fire);
-    }
-
-    setTimeout(() => {
-      isBoosted = false;
-      coinsPerClick = originalCoinsPerClick;
-      penguin.classList.remove("boosted");
-
-      fireStickers.forEach(fire => penguin.removeChild(fire));
-    }, 15000);
-  }
-
-  // Для прикладу — викличемо буст при кліку на пінгвіна
-  penguin.addEventListener('click', activatePenguinBoost);
-</script>
 
 </body>
 </html>
