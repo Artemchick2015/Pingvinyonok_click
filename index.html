@@ -570,10 +570,9 @@ document.addEventListener("visibilitychange", function() {
 <div id="subscribeBanner" style="
     position: fixed;
     bottom: 50px;
-    left: 0;
-    width: calc(100% - 50px); /* Зменшено на 50px */
+    left: -50px; /* Зсув лівіше на 50px */
+    width: calc(100% - 50px); /* Менша ширина */
     max-width: 600px;
-    margin: 0 25px; /* Щоб було по центру при зменшеній ширині */
     background-color: #1a73e8;
     color: #fff;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
