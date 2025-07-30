@@ -45,6 +45,16 @@
   }
 
   body {
+    <div id="rps-game" style="margin-top: 20px; color: white;">
+  <h2>Камінь-Ножиці-Папір</h2>
+  <p>Виберіть свій хід:</p>
+  <button class="rps-btn" data-choice="rock">✊ Камінь</button>
+  <button class="rps-btn" data-choice="scissors">✌️ Ножиці</button>
+  <button class="rps-btn" data-choice="paper">✋ Папір</button>
+
+  <p id="rps-result" style="margin-top: 15px; font-size: 1.2em;"></p>
+</div>
+
     background: linear-gradient(135deg, #000000, #8b0000, #000000);
     background-size: 400% 400%;
     animation: gradientShift 10s ease infinite;
@@ -257,6 +267,7 @@
   .casino-win {
     color: green;
   }
+  
   .promo-container {
     display: none;
     text-align: center;
@@ -350,18 +361,6 @@
       <div class="casino-result" id="casinoResult"></div>
     </div>
   </div>
-
-  <div id="rpsGame" style="margin-top: 40px;">
-  <h3>🎮 Камінь-Ножиці-Папір</h3>
-  <label>Ставка (в PingviCoins): </label>
-  <input type="number" id="rpsBet" min="1" value="10" style="width: 60px;">
-  <div style="margin-top: 10px;">
-    <button onclick="playRPS('rock')">🪨 Камінь</button>
-    <button onclick="playRPS('scissors')">✂️ Ножиці</button>
-    <button onclick="playRPS('paper')">📄 Папір</button>
-  </div>
-  <p id="rpsResult" style="margin-top: 15px; font-weight: bold;"></p>
-</div>
 
   <!-- Меню кнопок знизу з горизонтальною прокруткою -->
   <div class="menu-wrapper" tabindex="0" aria-label="Main menu">
