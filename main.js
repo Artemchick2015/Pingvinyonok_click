@@ -55,6 +55,20 @@ upgradePassiveBtn.addEventListener('click', () => {
   }
 });
 
+const playMusicBtn = document.getElementById("play-music");
+const bgMusic = document.getElementById("bg-music");
+
+playMusicBtn.addEventListener("click", () => {
+  bgMusic.play()
+    .then(() => {
+      playMusicBtn.style.display = "none"; // ховаємо кнопку після запуску
+    })
+    .catch((error) => {
+      alert("Не вдалося запустити музику. Натисніть кнопку ще раз.");
+      console.error(error);
+    });
+});
+
 // Пасивний дохід: додаємо 1 монету кожні 3.6 секунди (1000 монет на годину)
 setInterval(() => {
   if (passiveIncome) {
