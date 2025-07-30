@@ -65,6 +65,32 @@ setInterval(() => {
 
 updateDisplay();
 window.onload = function() {
+  window.onload = function() {
+  // Завантажуємо монети та останню дату бонусу з localStorage
+  let pingviCoins = parseInt(localStorage.getItem('pingviCoins')) || 0;
+  let lastBonusDate = localStorage.getItem('lastBonusDate'); // формат YYYY-MM-DD
+
+  // Отримуємо сьогоднішню дату у форматі YYYY-MM-DD
+  let today = new Date().toISOString().slice(0, 10);
+
+  // Якщо сьогоднішня дата відрізняється від останньої дати отримання бонусу
+  if (lastBonusDate !== today) {
+    pingviCoins += 500; // додаємо бонус
+    localStorage.setItem('pingviCoins', pingviCoins);
+    localStorage.setItem('lastBonusDate', today);
+    alert('Daily bonus: 500 Pingvi coins awarded!');
+  }
+
+  // Оновлюємо UI
+  updateUI();
+
+  // Інші дії завантаження гри
+};
+
+function updateUI() {
+  document.getElementById('coinsDisplay').innerText = `Pingvi Coins: ${pingviCoins}`;
+}
+
   let coins = 0;
   let coinsPerClick = 1;
   let passiveIncome = false;
