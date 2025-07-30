@@ -45,6 +45,20 @@
   }
 
   body {
+    <!-- Кнопка увімкнення музики -->
+<button id="playBtn" style="
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 10000;
+  background-color: #ff0000;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px;
+  cursor: pointer;
+">🎵 Увімкнути музику</button>
+
     background: linear-gradient(135deg, #000000, #8b0000, #000000);
     background-size: 400% 400%;
     animation: gradientShift 10s ease infinite;
@@ -395,17 +409,6 @@ document.addEventListener("visibilitychange", function() {
   if (document.visibilityState === "hidden") autoSaveGame();
 });
 
-
- <button id="playBtn">Увімкнути музику</button>
-
-<script>
-  const audio = new Audio('https://Artemchick2015.github.io/Pingvinyonok_click/Di%20Young%20Pixel%20Pig.mp3');
-  audio.loop = true;
-
-  document.getElementById('playBtn').addEventListener('click', () => {
-    audio.play();
-  });
-</script>
 
   // --- Логіка гри ---
   let count = 0;
