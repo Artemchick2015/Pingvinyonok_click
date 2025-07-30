@@ -55,6 +55,39 @@ upgradePassiveBtn.addEventListener('click', () => {
   }
 });
 
+let coins = 0;  // your coin count
+const coinsDisplay = document.getElementById('coins');
+
+function updateDisplay() {
+  coinsDisplay.textContent = `Coins: ${coins}`;
+}
+
+const promoInput = document.getElementById('promoInput');
+const applyPromoBtn = document.getElementById('applyPromoBtn');
+const promoStatus = document.getElementById('promoStatus');
+
+let promoUsed = false; // prevent multiple use
+
+applyPromoBtn.addEventListener('click', () => {
+  const code = promoInput.value.trim().toLowerCase();
+
+  if (promoUsed) {
+    promoStatus.textContent = 'Promo code already used!';
+    return;
+  }
+
+  if (code === 'antarctica') {
+    coins += 2500;
+    updateDisplay();
+    promoStatus.textContent = 'Promo code applied! You received 2500 Pingvi coins.';
+    promoUsed = true;
+  } else {
+    promoStatus.textContent = 'Invalid promo code.';
+  }
+});
+
+updateDisplay();
+
 // Пасивний дохід: додаємо 1 монету кожні 3.6 секунди (1000 монет на годину)
 setInterval(() => {
   if (passiveIncome) {
