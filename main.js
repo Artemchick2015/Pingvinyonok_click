@@ -17,15 +17,6 @@ const status = document.getElementById('status');
 const clickPenguinBtn = document.getElementById('clickPenguin');
 const upgradeClickBtn = document.getElementById('upgradeClick');
 const upgradePassiveBtn = document.getElementById('upgradePassive');
-const audio = new Audio('https://artemchick2015.github.io/Pingvinyonok_click/Di%20Young%20Pixel%20Pig.mp3');
-audio.loop = true;
-
-document.getElementById('playBtn').addEventListener('click', () => {
-  audio.play().catch((err) => {
-    alert("🎵 Натисни будь-де, щоб дозволити музику.");
-  });
-});
-
 
 function updateDisplay() {
   coinsDisplay.textContent = `Монети: ${coins}`;
@@ -207,16 +198,6 @@ window.onload = function() {
   updateProfitPerHour();
 };
 let superUpgradeCost = 1500;
-// --- МУЗИКА ---
-const audio = new Audio('https://artemchick2015.github.io/Pingvinyonok_click/Di%20Young%20Pixel%20Pig.mp3');
-audio.loop = true;
-
-document.getElementById('playBtn').addEventListener('click', () => {
-  audio.play().catch((err) => {
-    alert("🎵 Натисни будь-де, щоб дозволити музику.");
-  });
-});
-
 
 document.getElementById("buySuperUpgrade").addEventListener("click", () => {
   if (pingviCoins >= superUpgradeCost) {
