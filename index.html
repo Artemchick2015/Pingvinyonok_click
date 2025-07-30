@@ -570,8 +570,8 @@ document.addEventListener("visibilitychange", function() {
 <div id="subscribeBanner" style="
     position: fixed;
     bottom: 50px; /* Піднято на 50px від низу */
-    left: 20px;   /* Зсунено вліво на 20px */
-    width: calc(100% - 40px); /* Ширина з урахуванням відступів зліва і справа */
+    left: -30px;   /* Зсунено вліво ще на 50px від попереднього (20px - 50px = -30px) */
+    width: calc(100% + 30px); /* Збільшена ширина, щоб банер не обрізався */
     max-width: 600px; /* Максимальна ширина */
     background-color: #1a73e8;
     color: #fff;
