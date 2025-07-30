@@ -362,6 +362,34 @@
   </div>
 
 <script>
+  let coins = 0; // Ваша змінна для монет (можна взяти зі свого коду)
+const coinsDisplay = document.getElementById('coins'); // Елемент, де показуєш монети
+const subscribeBtn = document.getElementById('subscribeBtn');
+const questBar = document.getElementById('quest-bar');
+
+// Функція оновлення відображення монет
+function updateDisplay() {
+  if (coinsDisplay) {
+    coinsDisplay.textContent = `Монети: ${coins}`;
+  }
+}
+
+// Перевіряємо, чи користувач вже отримав нагороду (збереження в localStorage)
+if (localStorage.getItem('subscribedToCommunity') === 'true') {
+  subscribeBtn.disabled = true;
+  subscribeBtn.textContent = 'Вже підписані ✔️';
+}
+
+// Обробник кліку на кнопку підписки
+subscribeBtn.addEventListener('click', () => {
+  coins += 250;
+  updateDisplay();
+  subscribeBtn.disabled = true;
+  subscribeBtn.textContent = 'Дякуємо за підписку! ✔️';
+  // Запам’ятовуємо, що користувач отримав нагороду
+  localStorage.setItem('subscribedToCommunity', 'true');
+});
+
   // Лоадер: анімація прогрес-бару і показ контенту через 3 секунди
   window.addEventListener('DOMContentLoaded', function() {
     const loader = document.getElementById('loader-overlay');
