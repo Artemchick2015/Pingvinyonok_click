@@ -362,7 +362,30 @@
   </div>
 
 <script>
-  let coins = 0; // Ваша змінна для монет (можна взяти зі свого коду)
+
+  // Лоадер: анімація прогрес-бару і показ контенту через 3 секунди
+  window.addEventListener('DOMContentLoaded', function() {
+    const loader = document.getElementById('loader-overlay');
+    const progress = loader.querySelector('.progress');
+    let duration = 3000;
+    let start = null;
+
+    function animateProgressBar(timestamp) {
+      if (!start) start = timestamp;
+      let elapsed = timestamp - start;
+      let percent = Math.min((elapsed / duration) * 100, 100);
+      progress.style.width = percent + "%";
+      if (elapsed < duration) {
+        requestAnimationFrame(animateProgressBar);
+      } else {
+        loader.style.display = 'none';
+        document.getElementById('main-content').style.display = 'block';
+      }
+    }
+    requestAnimationFrame(animateProgressBar);
+  });
+
+    let coins = 0; // Ваша змінна для монет (можна взяти зі свого коду)
 const coinsDisplay = document.getElementById('coins'); // Елемент, де показуєш монети
 const subscribeBtn = document.getElementById('subscribeBtn');
 const questBar = document.getElementById('quest-bar');
@@ -389,29 +412,6 @@ subscribeBtn.addEventListener('click', () => {
   // Запам’ятовуємо, що користувач отримав нагороду
   localStorage.setItem('subscribedToCommunity', 'true');
 });
-
-  // Лоадер: анімація прогрес-бару і показ контенту через 3 секунди
-  window.addEventListener('DOMContentLoaded', function() {
-    const loader = document.getElementById('loader-overlay');
-    const progress = loader.querySelector('.progress');
-    let duration = 3000;
-    let start = null;
-
-    function animateProgressBar(timestamp) {
-      if (!start) start = timestamp;
-      let elapsed = timestamp - start;
-      let percent = Math.min((elapsed / duration) * 100, 100);
-      progress.style.width = percent + "%";
-      if (elapsed < duration) {
-        requestAnimationFrame(animateProgressBar);
-      } else {
-        loader.style.display = 'none';
-        document.getElementById('main-content').style.display = 'block';
-      }
-    }
-    requestAnimationFrame(animateProgressBar);
-  });
-  
   // --- АВТОЗБЕРЕЖЕННЯ ---
 function autoSaveGame() {
   localStorage.setItem("coins", count);
