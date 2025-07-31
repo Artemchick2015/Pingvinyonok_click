@@ -662,97 +662,70 @@ document.addEventListener("visibilitychange", function() {
     }
   }, 500);
 }
+window.addEventListener('load', () => {
+  const loader = document.getElementById('loader');
 
-document.addEventListener('DOMContentLoaded', () => {
-  waitForLoaderToDisappear(() => {
-    if (localStorage.getItem('nickname')) return;
+  // Спочатку ховаємо форму ніку, якщо вона є
+  let nicknameForm = null;
 
-    const overlay = document.createElement('div');
-    Object.assign(overlay.style, {
-      position: 'fixed',
-      top: 0, left: 0, right: 0, bottom: 0,
-      backgroundColor: 'rgba(0,0,0,0.5)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      zIndex: 1000,
-    });
-
-    const modal = document.createElement('div');
-    Object.assign(modal.style, {
-      backgroundColor: '#fff',
-      padding: '30px 40px',
-      borderRadius: '10px',
-      boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
-      textAlign: 'center',
-      maxWidth: '300px',
-      width: '100%',
-      fontFamily: 'Arial, sans-serif',
-    });
-
-    const title = document.createElement('h2');
-    title.textContent = 'Enter Your Nickname';
-    title.style.marginBottom = '20px';
-
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.placeholder = 'Your nickname';
-    Object.assign(input.style, {
-      width: '100%',
-      padding: '12px 10px',
-      fontSize: '18px',
-      border: '2px solid #ccc',
-      borderRadius: '5px',
-      marginBottom: '20px',
-      boxSizing: 'border-box',
-    });
-
-    const button = document.createElement('button');
-    button.textContent = 'Save Nickname';
-    Object.assign(button.style, {
-      backgroundColor: '#007bff',
-      border: 'none',
-      color: 'white',
-      padding: '12px 20px',
-      fontSize: '18px',
-      borderRadius: '5px',
-      cursor: 'pointer',
-      width: '100%',
-      transition: 'background-color 0.3s ease',
-    });
-
-    button.addEventListener('mouseenter', () => {
-      button.style.backgroundColor = '#0056b3';
-    });
-    button.addEventListener('mouseleave', () => {
-      button.style.backgroundColor = '#007bff';
-    });
-
-    modal.appendChild(title);
-    modal.appendChild(input);
-    modal.appendChild(button);
-    overlay.appendChild(modal);
-    document.body.appendChild(overlay);
-
-    input.focus();
-
-    function saveNickname() {
-      const val = input.value.trim();
-      if (val.length > 0) {
-        localStorage.setItem('nickname', val);
-        document.body.removeChild(overlay);
-        alert(`Welcome, ${val}!`);
-      } else {
-        alert('Please enter a valid nickname.');
-      }
+  function showNicknameForm() {
+    if (localStorage.getItem('nickname')) {
+      // Якщо ніком вже збережено — не показуємо форму
+      return;
     }
+    // Створюємо форму для ніку
+    nicknameForm = document.createElement('div');
+    nicknameForm.style.position = 'fixed';
+    nicknameForm.style.top = '50%';
+    nicknameForm.style.left = '50%';
+    nicknameForm.style.transform = 'translate(-50%, -50%)';
+    nicknameForm.style.background = 'rgba(0, 0, 0, 0.8)';
+    nicknameForm.style.padding = '20px';
+    nicknameForm.style.borderRadius = '10px';
+    nicknameForm.style.color = 'white';
+    nicknameForm.style.textAlign = 'center';
+    nicknameForm.style.zIndex = '1000';
 
-    button.addEventListener('click', saveNickname);
-    input.addEventListener('keyup', e => {
-      if (e.key === 'Enter') saveNickname();
+    nicknameForm.innerHTML = `
+      <label for="nicknameInput">Enter Your Nickname:</label><br/>
+      <input id="nicknameInput" type="text" style="padding:5px; margin-top:10px; width: 200px;" /><br/>
+      <button id="saveNicknameBtn" style="margin-top:10px; padding:5px 10px;">Save</button>
+    `;
+
+    document.body.appendChild(nicknameForm);
+
+    const saveBtn = document.getElementById('saveNicknameBtn');
+    const input = document.getElementById('nicknameInput');
+
+    saveBtn.addEventListener('click', () => {
+      const nick = input.value.trim();
+      if (nick.length > 0) {
+        localStorage.setItem('nickname', nick);
+        document.body.removeChild(nicknameForm);
+        nicknameForm = null;
+        alert(`Welcome, ${nick}!`);
+      } else {
+        alert('Please enter a valid nickname');
+      }
     });
-  });
+  }
+
+  // Функція, яка викликається коли лоадер зник
+  function onLoaderEnd() {
+    if (loader) {
+      loader.style.display = 'none'; // ховаємо лоадер
+    }
+    showNicknameForm(); // показуємо форму
+  }
+
+  // Припустимо, що лоадер зникає через 3 секунди (симуляція)
+  setTimeout(() => {
+    onLoaderEnd();
+  }, 3000);
+
+  // Якщо у тебе є логіка коли реально зникає лоадер, викликай onLoaderEnd() в той момент замість setTimeout
 });
+
 
 </script>
 <audio autoplay loop style="display:none;">
