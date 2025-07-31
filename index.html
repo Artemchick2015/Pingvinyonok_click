@@ -636,105 +636,123 @@ document.addEventListener("visibilitychange", function() {
 
     window.open('https://t.me/PNGVNyonoks', '_blank');
   });
-  document.addEventListener('DOMContentLoaded', () => {
-  // Перевірка ніку в localStorage
-  if (localStorage.getItem('nickname')) return;
-
-  // Створюємо затемнення
-  const overlay = document.createElement('div');
-  Object.assign(overlay.style, {
-    position: 'fixed',
-    top: 0, left: 0, right: 0, bottom: 0,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    zIndex: 1000,
-  });
-
-  // Створюємо модальне вікно
-  const modal = document.createElement('div');
-  Object.assign(modal.style, {
-    backgroundColor: '#fff',
-    padding: '30px 40px',
-    borderRadius: '10px',
-    boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
-    textAlign: 'center',
-    maxWidth: '300px',
-    width: '100%',
-    fontFamily: 'Arial, sans-serif',
-  });
-
-  // Заголовок
-  const title = document.createElement('h2');
-  title.textContent = 'Enter Your Nickname';
-  title.style.marginBottom = '20px';
-
-  // Поле вводу
-  const input = document.createElement('input');
-  input.type = 'text';
-  input.placeholder = 'Your nickname';
-  Object.assign(input.style, {
-    width: '100%',
-    padding: '12px 10px',
-    fontSize: '18px',
-    border: '2px solid #ccc',
-    borderRadius: '5px',
-    marginBottom: '20px',
-    boxSizing: 'border-box',
-  });
-
-  // Кнопка збереження
-  const button = document.createElement('button');
-  button.textContent = 'Save Nickname';
-  Object.assign(button.style, {
-    backgroundColor: '#007bff',
-    border: 'none',
-    color: 'white',
-    padding: '12px 20px',
-    fontSize: '18px',
-    borderRadius: '5px',
-    cursor: 'pointer',
-    width: '100%',
-    transition: 'background-color 0.3s ease',
-  });
-
-  button.addEventListener('mouseenter', () => {
-    button.style.backgroundColor = '#0056b3';
-  });
-  button.addEventListener('mouseleave', () => {
-    button.style.backgroundColor = '#007bff';
-  });
-
-  // Збираємо модалку
-  modal.appendChild(title);
-  modal.appendChild(input);
-  modal.appendChild(button);
-  overlay.appendChild(modal);
-  document.body.appendChild(overlay);
-
-  input.focus();
-
-  // Функція збереження
-  function saveNickname() {
-    const val = input.value.trim();
-    if (val.length > 0) {
-      localStorage.setItem('nickname', val);
-      document.body.removeChild(overlay);
-      alert(`Welcome, ${val}!`);
-      // Тут можна додати запуск гри чи іншу логіку
-    } else {
-      alert('Please enter a valid nickname.');
-    }
+  function waitForLoaderToDisappear(callback) {
+  const loader = document.getElementById('loader');
+  if (!loader) {
+    callback();
+    return;
   }
+  
+  const observer = new MutationObserver(() => {
+    const style = getComputedStyle(loader);
+    if (style.display === 'none' || style.visibility === 'hidden' || loader.parentNode === null) {
+      observer.disconnect();
+      callback();
+    }
+  });
 
-  button.addEventListener('click', saveNickname);
-  input.addEventListener('keyup', e => {
-    if (e.key === 'Enter') saveNickname();
+  observer.observe(document.body, { childList: true, subtree: true });
+
+  const interval = setInterval(() => {
+    const style = getComputedStyle(loader);
+    if (style.display === 'none' || style.visibility === 'hidden' || loader.parentNode === null) {
+      clearInterval(interval);
+      observer.disconnect();
+      callback();
+    }
+  }, 500);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  waitForLoaderToDisappear(() => {
+    if (localStorage.getItem('nickname')) return;
+
+    const overlay = document.createElement('div');
+    Object.assign(overlay.style, {
+      position: 'fixed',
+      top: 0, left: 0, right: 0, bottom: 0,
+      backgroundColor: 'rgba(0,0,0,0.5)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      zIndex: 1000,
+    });
+
+    const modal = document.createElement('div');
+    Object.assign(modal.style, {
+      backgroundColor: '#fff',
+      padding: '30px 40px',
+      borderRadius: '10px',
+      boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
+      textAlign: 'center',
+      maxWidth: '300px',
+      width: '100%',
+      fontFamily: 'Arial, sans-serif',
+    });
+
+    const title = document.createElement('h2');
+    title.textContent = 'Enter Your Nickname';
+    title.style.marginBottom = '20px';
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.placeholder = 'Your nickname';
+    Object.assign(input.style, {
+      width: '100%',
+      padding: '12px 10px',
+      fontSize: '18px',
+      border: '2px solid #ccc',
+      borderRadius: '5px',
+      marginBottom: '20px',
+      boxSizing: 'border-box',
+    });
+
+    const button = document.createElement('button');
+    button.textContent = 'Save Nickname';
+    Object.assign(button.style, {
+      backgroundColor: '#007bff',
+      border: 'none',
+      color: 'white',
+      padding: '12px 20px',
+      fontSize: '18px',
+      borderRadius: '5px',
+      cursor: 'pointer',
+      width: '100%',
+      transition: 'background-color 0.3s ease',
+    });
+
+    button.addEventListener('mouseenter', () => {
+      button.style.backgroundColor = '#0056b3';
+    });
+    button.addEventListener('mouseleave', () => {
+      button.style.backgroundColor = '#007bff';
+    });
+
+    modal.appendChild(title);
+    modal.appendChild(input);
+    modal.appendChild(button);
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
+
+    input.focus();
+
+    function saveNickname() {
+      const val = input.value.trim();
+      if (val.length > 0) {
+        localStorage.setItem('nickname', val);
+        document.body.removeChild(overlay);
+        alert(`Welcome, ${val}!`);
+      } else {
+        alert('Please enter a valid nickname.');
+      }
+    }
+
+    button.addEventListener('click', saveNickname);
+    input.addEventListener('keyup', e => {
+      if (e.key === 'Enter') saveNickname();
+    });
   });
 });
-
- 
 
 </script>
 <audio autoplay loop style="display:none;">
