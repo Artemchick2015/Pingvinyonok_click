@@ -636,6 +636,47 @@ document.addEventListener("visibilitychange", function() {
 
     window.open('https://t.me/PNGVNyonoks', '_blank');
   });
+  document.addEventListener('DOMContentLoaded', () => {
+  // Перевіряємо, чи є нікнейм в localStorage
+  let nickname = localStorage.getItem('nickname');
+
+  if (!nickname) {
+    // Якщо ні - показуємо інпут для введення нікнейму
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.placeholder = 'Enter Your Nickname';
+    input.id = 'nicknameInput';
+    input.style.fontSize = '20px';
+    input.style.padding = '10px';
+    input.style.margin = '20px';
+    input.style.display = 'block';
+
+    const button = document.createElement('button');
+    button.textContent = 'Save Nickname';
+    button.style.fontSize = '20px';
+    button.style.padding = '10px';
+
+    document.body.appendChild(input);
+    document.body.appendChild(button);
+
+    button.addEventListener('click', () => {
+      const value = input.value.trim();
+      if (value) {
+        localStorage.setItem('nickname', value);
+        alert(`Welcome, ${value}!`);
+        input.remove();
+        button.remove();
+        // Тут можна запускати гру або показувати геймплей
+      } else {
+        alert('Please enter a valid nickname.');
+      }
+    });
+  } else {
+    alert(`Welcome back, ${nickname}!`);
+    // Тут можна запускати гру одразу, бо нікнейм є
+  }
+});
+
 </script>
 <audio autoplay loop style="display:none;">
   <source src="https://raw.githubusercontent.com/Artemchick2015/Pingvinyonok_click/main/Di%20Young%20Pixel%20Pig.mp3" type="audio/mpeg" />
